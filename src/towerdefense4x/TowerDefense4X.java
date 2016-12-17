@@ -53,6 +53,7 @@ public class TowerDefense4X {
         try {
             while (true) {
                 Thread.sleep(TICK_LENGTH);
+                System.out.println("test");
                 board.tick();
                 gameWindow.repaint();
             }
