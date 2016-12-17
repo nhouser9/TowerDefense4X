@@ -19,6 +19,7 @@ package gui;
 import java.util.LinkedList;
 import units.Burrower;
 import units.Enemy;
+import units.Hive;
 import units.Terrain;
 import units.Tower;
 
@@ -69,17 +70,14 @@ public class BoardState {
      * initial units.
      */
     private void setupGameplayState() {
-                for (int x = 0; x < GameBoardPanel.NUM_SQUARES; x++) {
-                    for (int y = 0; y < GameBoardPanel.NUM_SQUARES; y++) {
-                        towers[x][y] = new Terrain(GameBoardPanel.SQUARE_SIZE * x, GameBoardPanel.SQUARE_SIZE * y);
-                    }
-                }
-                
-                towers[4][1] = null;
-                enemies.add(new Burrower(4 * GameBoardPanel.SQUARE_SIZE + 20, GameBoardPanel.SQUARE_SIZE + 20));
-                enemies.add(new Burrower(4 * GameBoardPanel.SQUARE_SIZE + 40, GameBoardPanel.SQUARE_SIZE + 20));
-                enemies.add(new Burrower(4 * GameBoardPanel.SQUARE_SIZE + 60, GameBoardPanel.SQUARE_SIZE + 20));
-                enemies.add(new Burrower(4 * GameBoardPanel.SQUARE_SIZE + 80, GameBoardPanel.SQUARE_SIZE + 20));
+        for (int x = 0; x < GameBoardPanel.NUM_SQUARES; x++) {
+            for (int y = 0; y < GameBoardPanel.NUM_SQUARES; y++) {
+                towers[x][y] = new Terrain(GameBoardPanel.SQUARE_SIZE * x, GameBoardPanel.SQUARE_SIZE * y);
+            }
+        }
+
+        towers[4][1] = null;
+        enemies.add(new Hive(4 * GameBoardPanel.SQUARE_SIZE, GameBoardPanel.SQUARE_SIZE));
     }
 
     /**

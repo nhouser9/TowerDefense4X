@@ -28,7 +28,7 @@ import java.awt.Point;
 public abstract class Enemy extends Unit {
 
     //the location of this unit on the board
-    private DoublePoint position;
+    protected DoublePoint position;
 
     /**
      * Constructor which sets the position of the Enemy equal to the passed
@@ -50,48 +50,5 @@ public abstract class Enemy extends Unit {
     @Override
     public Point getPosition() {
         return position.toPoint();
-    }
-
-    /**
-     * Method which tries to move in the passed direction and the Tower that got
-     * in the way if not. The move will fail if the Enemy's hitbox would
-     * intersect a Tower after the move. The move will also fail without
-     * returning a Tower if the move would exit the game board.
-     *
-     * @param board the game board on which the move is being performed
-     * @param direction a DirectionVector object representing the direction of
-     * the move being attempted
-     * @return the Tower that blocked this move, or null if the move succeeded
-     */
-    protected Tower move(GameBoardPanel board, DirectionVector direction) {
-        DoublePoint target = position.offset(direction);
-
-        Point topLeft = target.toPoint();
-        Point topRight = new Point(topLeft.x + getSize(), topLeft.y);
-        Point bottomLeft = new Point(topLeft.x, topLeft.y + getSize());
-        Point bottomRight = new Point(topRight.x, bottomLeft.y);
-
-        if (topLeft.x <= 0 || topLeft.y <= 0) {
-            return null;
-        }
-        if (bottomRight.x >= GameBoardPanel.SIZE || bottomRight.y >= GameBoardPanel.SIZE) {
-            return null;
-        }
-
-        if (board.towerAtPosition(topLeft) != null) {
-            return board.towerAtPosition(topLeft);
-        }
-        if (board.towerAtPosition(topRight) != null) {
-            return board.towerAtPosition(topRight);
-        }
-        if (board.towerAtPosition(bottomLeft) != null) {
-            return board.towerAtPosition(bottomLeft);
-        }
-        if (board.towerAtPosition(bottomRight) != null) {
-            return board.towerAtPosition(bottomRight);
-        }
-
-        position = target;
-        return null;
     }
 }

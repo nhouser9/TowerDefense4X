@@ -149,7 +149,7 @@ public class GameBoardPanelTest {
     @Test
     public void PositionOccupied_ShouldReturnNull_WhenAUnitAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-        board.addUnit(new Burrower(100, 100));
+        board.addUnit(new Burrower(100, 100, new Point(1, 1)));
         if (board.towerAtPosition(new Point(100, 100)) != null) {
             fail("Expected positionOccupied to return false after adding an Enemy.");
         }
@@ -162,9 +162,9 @@ public class GameBoardPanelTest {
     public void Tick_ShouldRemoveDeadEnemies() {
         BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Enemy toRemove = new Burrower(0, 0);
+        Enemy toRemove = new Burrower(0, 0, new Point(1, 1));
         board.addUnit(toRemove);
-        toRemove.changeHealth(0 - Integer.MAX_VALUE);
+        toRemove.destroy();
         board.tick();
         if (testBoardState.enemies.contains(toRemove)) {
             fail("The unit was not removed after taking more than its max health in damage.");
@@ -180,7 +180,7 @@ public class GameBoardPanelTest {
         GameBoardPanel board = new GameBoardPanel(testBoardState);
         Tower toRemove = new Terrain(0, 0);
         board.addUnit(toRemove);
-        toRemove.changeHealth(0 - Integer.MAX_VALUE);
+        toRemove.destroy();
         board.tick();
         for (int x = 0; x < GameBoardPanel.NUM_SQUARES; x++) {
             for (int y = 0; y < GameBoardPanel.NUM_SQUARES; y++) {

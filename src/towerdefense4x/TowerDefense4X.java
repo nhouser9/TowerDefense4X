@@ -31,7 +31,7 @@ import javax.swing.JFrame;
 public class TowerDefense4X {
 
     //constant indicating how many milliseconds should elapse between game ticks
-    private static final int TICK_LENGTH = 10;
+    private static final int TICK_LENGTH = 20;
 
     /**
      * Main method and entry point for the program. Creates the main game window

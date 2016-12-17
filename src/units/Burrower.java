@@ -19,6 +19,7 @@ package units;
 import gui.GameBoardPanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 /**
  * Class representing a monster that burrows its way through walls and towers;
@@ -26,20 +27,31 @@ import java.awt.Graphics;
  *
  * @author Nick Houser
  */
-public class Burrower extends Enemy {
+public class Burrower extends Mover {
     
     /**
      * Constructor which calls the parent constructor to initialize position.
      *
      * @param xPosition the x position where the Burrower should be created
      * @param yPosition the y position where the Burrower should be created
+     * @param target the point the Burrower should travel towards
      */
-    public Burrower(int xPosition, int yPosition) {
-        super(xPosition, yPosition);
+    public Burrower(int xPosition, int yPosition, Point target) {
+        super(xPosition, yPosition, target);
     }
 
     /**
-     * Method which will return the initial health of the unit.
+     * Method which defines the speed of a Burrower.
+     * 
+     * @return the speed of a Burrower as a double
+     */
+    @Override
+    protected int getSpeed() {
+        return 1;
+    }
+    
+    /**
+     * Method which will return the initial health of a Burrower.
      * 
      * @return the initial health of the unit
      */
@@ -59,15 +71,18 @@ public class Burrower extends Enemy {
     }
     
     /**
-     * Method which allows the Burrower to move.
+     * Method which allows the Burrower to move and attack nearby Towers.
      * 
      * @param board the game board on which the unit is acting
      */
     @Override
     public void tick(GameBoardPanel board) {
-        Tower blocker = move(board, new DirectionVector(0, .5));
+        Tower blocker = move(board);
         if (blocker != null) {
             blocker.changeHealth(-1);
+            if (blocker.isDead()) {
+                destroy();
+            }
         }
     }
 
@@ -79,6 +94,6 @@ public class Burrower extends Enemy {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(getPosition().x, getPosition().y, 10, 10);
+        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
     }
 }

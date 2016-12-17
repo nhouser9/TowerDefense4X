@@ -18,6 +18,8 @@ package units;
 
 import gui.GameBoardPanel;
 import java.awt.Point;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
@@ -40,11 +42,11 @@ public class BurrowerTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(new Terrain(0, 0));
 
-        Burrower testBurrower = spy(new Burrower(0, 0));
+        Burrower testBurrower = spy(new Burrower(0, 0, new Point(1, 1)));
 
         testBurrower.tick(fakeBoard);
 
-        Mockito.verify(testBurrower).move(any(GameBoardPanel.class), any(DirectionVector.class));
+        Mockito.verify(testBurrower).move(any(GameBoardPanel.class));
     }
     
     /**
@@ -56,10 +58,54 @@ public class BurrowerTest {
         Tower fakeBlocker = mock(Terrain.class);
         when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(fakeBlocker);
 
-        Burrower testBurrower = new Burrower(0, 0);
+        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
 
         testBurrower.tick(fakeBoard);
 
         Mockito.verify(fakeBlocker).changeHealth(any(int.class));
+    }
+    
+    /**
+     * Test of tick method, of class Burrower.
+     */
+    @Test
+    public void Tick_ShouldMoveTowardsThePassedPoint() {
+        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
+        
+        int initialX = 1;
+        int initialY = 1;
+        int speed = 4;
+        Point source = new Point(initialX, initialY);
+        Point target = new Point(1000, 300);
+        DirectionVector toTargetBeforeTick = new DirectionVector(source, target, speed);
+        
+        Burrower testBurrower = new Burrower(initialX, initialY, target);
+        for (int ticks = 0; ticks < 100; ticks++) {
+            testBurrower.tick(fakeBoard);
+        }
+        DirectionVector toTargetAfterTick = new DirectionVector(testBurrower.getPosition(), target, speed);
+        
+        assertEquals(toTargetAfterTick.xDirection, toTargetBeforeTick.xDirection, .1);
+        assertEquals(toTargetAfterTick.yDirection, toTargetBeforeTick.yDirection, .1);
+    }
+    
+    /**
+     * Test of tick method, of class Burrower.
+     */
+    @Test
+    public void Tick_ShouldMarkTheBurrowerForDeath_WhenItDestroysATower() {
+        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        Tower fakeBlocker = mock(Terrain.class);
+        when(fakeBlocker.isDead()).thenReturn(true);
+        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(fakeBlocker);
+
+        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
+
+        testBurrower.tick(fakeBoard);
+
+        if (!testBurrower.isDead()) {
+            fail("The Burrower did not die after destroying a Tower.");
+        }
     }
 }

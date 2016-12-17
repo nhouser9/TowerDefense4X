@@ -100,15 +100,11 @@ public class GameBoardPanel extends JPanel {
      * update themselves.
      */
     public void tick() {
-        LinkedList<Enemy> deadEnemies = new LinkedList<>();
-        for (Enemy enemy : boardState.enemies) {
+        for (Enemy enemy : (LinkedList<Enemy>) boardState.enemies.clone()) {
             enemy.tick(this);
             if (enemy.isDead()) {
-                deadEnemies.add(enemy);
+                boardState.enemies.remove(enemy);
             }
-        }
-        for (Enemy deadEnemy : deadEnemies) {
-            boardState.enemies.remove(deadEnemy);
         }
 
         for (int x = 0; x < NUM_SQUARES; x++) {

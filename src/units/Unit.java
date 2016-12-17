@@ -47,6 +47,13 @@ public abstract class Unit {
     public void changeHealth(int delta) {
         health = health + delta;
     }
+   
+    /**
+     * Method which allows a Unit to be instantly marked for deletion.
+     */
+    public void destroy() {
+        health = -1000;
+    }
     
     /**
      * Method which checks if this unit has been destroyed.

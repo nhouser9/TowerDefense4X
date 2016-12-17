@@ -46,7 +46,7 @@ public class Terrain extends Tower {
      */
     @Override
     public int initialHealth() {
-        return 25;
+        return 200;
     }
     
     /**

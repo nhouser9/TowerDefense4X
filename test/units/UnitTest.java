@@ -16,6 +16,7 @@
  */
 package units;
 
+import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -31,8 +32,27 @@ public class UnitTest {
      */
     @Test
     public void IsDead_ShouldReturnTrue_AfterSubtractingAUnitsInitialHealth() {
-        Burrower testUnit = new Burrower(0, 0);
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
         testUnit.changeHealth(0 - testUnit.initialHealth());
         assertEquals(true, testUnit.isDead());
+    }
+
+    /**
+     * Test of isDead method, of class Unit.
+     */
+    @Test
+    public void IsDead_ShouldReturnTrue_AfterCallingDestroy() {
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
+        testUnit.destroy();
+        assertEquals(true, testUnit.isDead());
+    }
+
+    /**
+     * Test of isDead method, of class Unit.
+     */
+    @Test
+    public void IsDead_ShouldReturnFalse_Initially() {
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
+        assertEquals(false, testUnit.isDead());
     }
 }
