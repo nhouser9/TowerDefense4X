@@ -17,11 +17,12 @@
 package gui;
 
 import java.util.LinkedList;
-import units.Burrower;
-import units.Enemy;
-import units.Hive;
-import units.Terrain;
-import units.Tower;
+import units.Enemies.Enemy;
+import units.Enemies.Hive;
+import units.Towers.Generator;
+import units.Towers.Shooter;
+import units.Towers.Terrain;
+import units.Towers.Tower;
 
 /**
  * Class which tracks the current state of the board, consisting mainly of which
@@ -36,7 +37,8 @@ public class BoardState {
      */
     public static enum InitialState {
         GAMEPLAY,
-        EMPTY
+        EMPTY,
+        INTEGRATIONTEST
     }
 
     //a list of the Enemies on the board
@@ -61,6 +63,9 @@ public class BoardState {
                 break;
             case EMPTY:
                 setupEmptyState();
+                break;
+            case INTEGRATIONTEST:
+                setupIntegrationTestState();
                 break;
         }
     }
@@ -89,5 +94,24 @@ public class BoardState {
                 towers[x][y] = null;
             }
         }
+    }
+
+    /**
+     * Sets up the integration test gamestate, which varies with testing needs.
+     */
+    private void setupIntegrationTestState() {
+        for (int x = 0; x < GameBoardPanel.NUM_SQUARES; x++) {
+            for (int y = 0; y < GameBoardPanel.NUM_SQUARES; y++) {
+                towers[x][y] = new Terrain(GameBoardPanel.SQUARE_SIZE * x, GameBoardPanel.SQUARE_SIZE * y);
+            }
+        }
+
+        towers[4][1] = null;
+        enemies.add(new Hive(4 * GameBoardPanel.SQUARE_SIZE, GameBoardPanel.SQUARE_SIZE));
+        
+        towers[4][3] = new Shooter(4 * GameBoardPanel.SQUARE_SIZE, 3 * GameBoardPanel.SQUARE_SIZE);
+        Generator baseGenerator = new Generator(4 * GameBoardPanel.SQUARE_SIZE, 4 * GameBoardPanel.SQUARE_SIZE);
+        baseGenerator.power(new Generator(-1000, -1000));
+        towers[4][4] = baseGenerator;
     }
 }

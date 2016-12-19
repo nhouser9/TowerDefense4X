@@ -14,28 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
-import gui.GameBoardPanel;
+import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unit tests for the Tower class.
- * 
+ * Unit tests for the Enemy class.
+ *
  * @author Nick Houser
  */
-public class TowerTest {
+public class EnemyTest {
 
     /**
-     * Test of Constructor method, of class Tower.
+     * Test of Constructor method, of class Enemy.
      */
     @Test
-    public void Constructor_ShouldRoundPosition_WhenArgsNotDivisibleBySquareSize() {
-        int xGridAlignment = GameBoardPanel.SQUARE_SIZE * 2;
-        int yGridAlignment = GameBoardPanel.SQUARE_SIZE * 4;
-        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + GameBoardPanel.SQUARE_SIZE - 2);
-        assertEquals(test.getPosition().x, xGridAlignment);
-        assertEquals(test.getPosition().y, yGridAlignment);
+    public void Constructor_ShouldSetPositionEqualToPassedPosition() {
+        int x = 3;
+        int y = 200;
+        Burrower testEnemy = new Burrower(x, y, new Point(1, 1));
+        assertEquals(x, testEnemy.getPosition().x);
+        assertEquals(y, testEnemy.getPosition().y);
     }
 }

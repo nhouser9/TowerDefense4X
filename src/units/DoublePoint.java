@@ -25,7 +25,7 @@ import java.awt.Point;
  *
  * @author Nick Houser
  */
-class DoublePoint {
+public class DoublePoint {
 
     //variables representing x and y co-ordinates
     public final double x;

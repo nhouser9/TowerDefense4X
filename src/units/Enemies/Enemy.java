@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
 import gui.GameBoardPanel;
 import java.awt.Point;
+import units.DoublePoint;
+import units.Unit;
 
 /**
  * Abstract class which represents an Enemy, which is an AI-controlled unit that
@@ -50,5 +52,17 @@ public abstract class Enemy extends Unit {
     @Override
     public Point getPosition() {
         return position.toPoint();
+    }
+
+    /**
+     * Gets the current position of the unit on the grid.
+     *
+     * @return the position of the unit on the grid as a Point object
+     */
+    @Override
+    public Point getGridPosition() {
+        int gridX = Math.floorDiv(getPosition().x, GameBoardPanel.SQUARE_SIZE);
+        int gridY = Math.floorDiv(getPosition().y, GameBoardPanel.SQUARE_SIZE);
+        return new Point(gridX, gridY);
     }
 }

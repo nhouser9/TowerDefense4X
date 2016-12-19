@@ -21,10 +21,10 @@ import java.awt.Point;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.mockito.Mockito;
-import units.Burrower;
-import units.Enemy;
-import units.Terrain;
-import units.Tower;
+import units.Enemies.Burrower;
+import units.Enemies.Enemy;
+import units.Towers.Terrain;
+import units.Towers.Tower;
 import units.Unit;
 
 /**
@@ -188,6 +188,20 @@ public class GameBoardPanelTest {
                     fail("The unit was not removed after taking more than its max health in damage.");
                 }
             }
+        }
+    }
+
+    /**
+     * Test of towerAtGridPosition method, of class GameBoardPanel.
+     */
+    @Test
+    public void TowerAtGridPosition_ShouldNotThrow_WhenPassedInvalidIndeces() {
+        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        GameBoardPanel board = new GameBoardPanel(testBoardState);
+        try {
+            board.towerAtGridPosition(new Point(-1, -1));
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            fail("Exception was expected to be handled but was thrown from method towerAtGridPosition().");
         }
     }
 }

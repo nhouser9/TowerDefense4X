@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Towers;
 
 import gui.GameBoardPanel;
 import java.awt.Point;
+import units.Unit;
 
 /**
  * Abstract class which represents a Tower, which is a player-controlled unit
@@ -29,6 +30,9 @@ public abstract class Tower extends Unit {
 
     //the location of this unit on the board
     private final Point position;
+    
+    //the location of the unit on the grid imposed on the board
+    private final Point gridPosition;
 
     /**
      * Constructor which sets the position of the Tower. Ensures the position is
@@ -42,6 +46,7 @@ public abstract class Tower extends Unit {
         xPosition = xPosition - (xPosition % GameBoardPanel.SQUARE_SIZE);
         yPosition = yPosition - (yPosition % GameBoardPanel.SQUARE_SIZE);
         position = new Point(xPosition, yPosition);
+        gridPosition = new Point(xPosition / GameBoardPanel.SQUARE_SIZE, yPosition / GameBoardPanel.SQUARE_SIZE);
     }
 
     /**
@@ -52,6 +57,17 @@ public abstract class Tower extends Unit {
     @Override
     public Point getPosition() {
         return position;
+    }
+
+    /**
+     * Returns the position on of the Tower on the imaginary grid to which
+     * Towers snap. Does this by dividing the position by the size of a grid
+     * square.
+     *
+     * @return the co-ordinates of this Tower on the grid imposed on the board
+     */
+    public Point getGridPosition() {
+        return gridPosition;
     }
 
     /**

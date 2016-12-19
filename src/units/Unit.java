@@ -31,33 +31,33 @@ public abstract class Unit {
 
     //the health of the unit
     private int health;
-    
+
     /**
      * Constructor which initializes health.
      */
     public Unit() {
         health = initialHealth();
     }
-    
+
     /**
      * Method which exposes health for modification.
-     * 
+     *
      * @param delta the amount to increment the health
      */
     public void changeHealth(int delta) {
         health = health + delta;
     }
-   
+
     /**
      * Method which allows a Unit to be instantly marked for deletion.
      */
     public void destroy() {
         health = -1000;
     }
-    
+
     /**
      * Method which checks if this unit has been destroyed.
-     * 
+     *
      * @return true if the unit's health is 0 or less, false otherwise
      */
     public boolean isDead() {
@@ -65,34 +65,56 @@ public abstract class Unit {
     }
 
     /**
+     * Method which returns the position of the center of the unit. This is used
+     * during graphics rendering.
+     *
+     * @return the center Point of the unit
+     */
+    public Point getCenterPosition() {
+        return new Point(getPosition().x + getSize() / 2, getPosition().y + getSize() / 2);
+    }
+
+    /**
      * Method which will return the initial health of the unit.
-     * 
+     *
      * @return the initial health of the unit
      */
     protected abstract int initialHealth();
-    
+
     /**
      * Method which will return the draw size of the unit.
      *
      * @return the draw size of the unit
      */
     public abstract int getSize();
-    
+
     /**
-     * Gets the current position of the unit.
+     * Gets the current position of the unit in terms of its co-ordinates on the
+     * board.
      *
      * @return the position of the unit as a Point object
      */
     public abstract Point getPosition();
 
     /**
-     * Method which defines what action the unit will take during gameplay. This
-     * will be called repeatedly by the main game loop to simulate continuous
-     * action.
+     * Gets the current position of the unit in terms of its location on the
+     * grid imposed on the board.
+     *
+     * @return the position of the unit on the grid as a Point object
+     */
+    public abstract Point getGridPosition();
+
+    /**
+     * Method which defines what action the unit will take during gameplay. Does
+     * nothing by default; implementations must override this if they wish to
+     * act. This will be called repeatedly by the main game loop to simulate
+     * continuous action.
      *
      * @param board the game board on which the unit is acting
      */
-    public abstract void tick(GameBoardPanel board);
+    public void tick(GameBoardPanel board) {
+        //do nothing by default
+    }
 
     /**
      * Method which asks the Unit to draw itself on the board.

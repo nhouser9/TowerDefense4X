@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Towers;
 
 import gui.GameBoardPanel;
 import java.awt.Color;
@@ -61,9 +61,9 @@ public class Terrain extends Tower {
     }
 
     /**
-     * Method which draws a unit of terrain on the board.
+     * Method which draws a Terrain on the board.
      *
-     * @param g
+     * @param g the Graphics object to draw on
      */
     @Override
     public void drawSelf(Graphics g) {

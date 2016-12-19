@@ -40,11 +40,12 @@ public class TowerDefense4X {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.opengl", "true");
         JFrame gameWindow = new JFrame();
         gameWindow.setLayout(new BoxLayout(gameWindow.getContentPane(), BoxLayout.Y_AXIS));
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameWindow.add(new GuiPanel());
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.GAMEPLAY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.INTEGRATIONTEST));
         gameWindow.add(board);
         gameWindow.pack();
         gameWindow.setResizable(false);
@@ -53,7 +54,6 @@ public class TowerDefense4X {
         try {
             while (true) {
                 Thread.sleep(TICK_LENGTH);
-                System.out.println("test");
                 board.tick();
                 gameWindow.repaint();
             }

@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
 import gui.GameBoardPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import units.Towers.Tower;
 
 /**
  * Class representing a monster that burrows its way through walls and towers;

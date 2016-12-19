@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
 import gui.GameBoardPanel;
 import java.awt.Point;
@@ -26,6 +26,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import units.DirectionVector;
+import units.Towers.Terrain;
+import units.Towers.Tower;
 
 /**
  * Unit tests for the Burrower class.
@@ -48,7 +51,7 @@ public class BurrowerTest {
 
         Mockito.verify(testBurrower).move(any(GameBoardPanel.class));
     }
-    
+
     /**
      * Test of tick method, of class Burrower.
      */
@@ -64,7 +67,7 @@ public class BurrowerTest {
 
         Mockito.verify(fakeBlocker).changeHealth(any(int.class));
     }
-    
+
     /**
      * Test of tick method, of class Burrower.
      */
@@ -72,24 +75,24 @@ public class BurrowerTest {
     public void Tick_ShouldMoveTowardsThePassedPoint() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
-        
+
         int initialX = 1;
         int initialY = 1;
         int speed = 4;
         Point source = new Point(initialX, initialY);
         Point target = new Point(1000, 300);
         DirectionVector toTargetBeforeTick = new DirectionVector(source, target, speed);
-        
+
         Burrower testBurrower = new Burrower(initialX, initialY, target);
         for (int ticks = 0; ticks < 100; ticks++) {
             testBurrower.tick(fakeBoard);
         }
         DirectionVector toTargetAfterTick = new DirectionVector(testBurrower.getPosition(), target, speed);
-        
+
         assertEquals(toTargetAfterTick.xDirection, toTargetBeforeTick.xDirection, .1);
         assertEquals(toTargetAfterTick.yDirection, toTargetBeforeTick.yDirection, .1);
     }
-    
+
     /**
      * Test of tick method, of class Burrower.
      */

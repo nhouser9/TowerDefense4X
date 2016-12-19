@@ -14,32 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Towers;
 
 import gui.GameBoardPanel;
-import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 
 /**
- * Unit tests for the Enemy class.
- * 
+ * Unit tests for the Tower class.
+ *
  * @author Nick Houser
  */
-public class EnemyTest {    
+public class TowerTest {
 
     /**
-     * Test of Constructor method, of class Enemy.
+     * Test of Constructor method, of class Tower.
      */
     @Test
-    public void Constructor_ShouldSetPositionEqualToPassedPosition() {
-        int x = 3;
-        int y = 200;
-        Burrower testEnemy = new Burrower(x, y, new Point(1, 1));
-        assertEquals(x, testEnemy.getPosition().x);
-        assertEquals(y, testEnemy.getPosition().y);
+    public void Constructor_ShouldRoundPosition_WhenArgsNotDivisibleBySquareSize() {
+        int xGridAlignment = GameBoardPanel.SQUARE_SIZE * 2;
+        int yGridAlignment = GameBoardPanel.SQUARE_SIZE * 4;
+        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + GameBoardPanel.SQUARE_SIZE - 2);
+        assertEquals(test.getPosition().x, xGridAlignment);
+        assertEquals(test.getPosition().y, yGridAlignment);
     }
 }

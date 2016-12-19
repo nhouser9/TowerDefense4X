@@ -22,8 +22,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 import javax.swing.JPanel;
-import units.Enemy;
-import units.Tower;
+import units.Enemies.Enemy;
+import units.Enemies.Hive;
+import units.Towers.Tower;
 import units.Unit;
 
 /**
@@ -81,17 +82,61 @@ public class GameBoardPanel extends JPanel {
     }
 
     /**
-     * Checks whether a given position is occupied by a Tower. This is used to
-     * ensure that Enemies cannot move freely into squares where the player has
-     * placed Towers.
+     * Converts the passed co-ordinates to grid indices before delegating the
+     * search to the towerAtGridPositionMethod to find the tower at the passed
+     * position. This is used to ensure that Enemies cannot move freely into
+     * squares where the player has placed Towers.
      *
-     * @param position a Point ojbect representing the position to check
+     * @param position a Point object representing the position to check
      * @return the Tower at the passed position, or null if none exists
      */
     public Tower towerAtPosition(Point position) {
         int gridX = Math.floorDiv(position.x, SQUARE_SIZE);
         int gridY = Math.floorDiv(position.y, SQUARE_SIZE);
-        return boardState.towers[gridX][gridY];
+        return towerAtGridPosition(new Point(gridX, gridY));
+    }
+
+    /**
+     * Checks whether a given position on the grid imposed on the board is
+     * occupied by a Tower. This is used to ensure that Enemies cannot move
+     * freely into squares where the player has placed Towers.
+     *
+     * @param position a Point object representing the grid position to check
+     * @return the Tower at the passed position, or null if none exists
+     */
+    public Tower towerAtGridPosition(Point position) {
+        if (position.x < 0 || position.y < 0) {
+            return null;
+        }
+        if (position.x >= NUM_SQUARES || position.y >= NUM_SQUARES) {
+            return null;
+        }
+        return boardState.towers[position.x][position.y];
+    }
+
+    /**
+     * Method which returns a single Enemy from the specified area. Does not
+     * find Hives, because they should not be target by Towers. Which enemy will
+     * be returned if multiple are found is undefined. Returns null if no
+     * enemies are found.
+     *
+     * @param topLeft the top left grid square of the search area
+     * @param bottomRight the bottom right grid square of the search area
+     * @return an Enemy within the specified area, or null if none are found
+     */
+    public Enemy firstEnemyInArea(Point topLeft, Point bottomRight) {
+        for (Enemy enemy : boardState.enemies) {
+            if (enemy instanceof Hive) {
+                continue;
+            }
+
+            int gridX = enemy.getGridPosition().x;
+            int gridY = enemy.getGridPosition().y;
+            if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
+                return enemy;
+            }
+        }
+        return null;
     }
 
     /**

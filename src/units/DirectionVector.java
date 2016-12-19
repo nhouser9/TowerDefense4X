@@ -22,7 +22,7 @@ import java.awt.Point;
  *
  * @author Nick Houser
  */
-class DirectionVector {
+public class DirectionVector {
 
     //variables for storing the x and y components of this vector
     public final double xDirection;

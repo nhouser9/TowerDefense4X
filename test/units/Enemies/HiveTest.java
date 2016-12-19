@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
 import gui.GameBoardPanel;
 import org.junit.Test;
@@ -23,10 +23,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
+import units.Unit;
 
 /**
  * Unit tests for the Hive class.
- * 
+ *
  * @author Nick Houser
  */
 public class HiveTest {
@@ -42,33 +43,33 @@ public class HiveTest {
         assertEquals(test.getPosition().x, xGridAlignment);
         assertEquals(test.getPosition().y, yGridAlignment);
     }
-    
+
     /**
      * Test of changeHealth method, of class Hive.
      */
     @Test
     public void ChangeHealth_ShouldNeverMarkAHiveForDeath() {
-        Hive testHive = new Hive(0,0);
+        Hive testHive = new Hive(0, 0);
         testHive.changeHealth(0 - Integer.MAX_VALUE);
         assertEquals(false, testHive.isDead());
     }
-    
+
     /**
      * Test of changeHealth method, of class Hive.
      */
     @Test
     public void Destroy_ShouldNeverMarkAHiveForDeath() {
-        Hive testHive = new Hive(0,0);
+        Hive testHive = new Hive(0, 0);
         testHive.destroy();
         assertEquals(false, testHive.isDead());
     }
-    
+
     /**
      * Test of tick method, of class Hive.
      */
     @Test
     public void Tick_ShouldSpawnABurrowerAtTheProperTimes() {
-        Hive testHive = new Hive(0,0);
+        Hive testHive = new Hive(0, 0);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         for (int ticks = 0; ticks < Hive.CADENCE_BURROWER - 1; ticks++) {
             testHive.tick(fakeBoard);

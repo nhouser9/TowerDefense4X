@@ -14,10 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units;
+package units.Enemies;
 
+import units.Towers.Tower;
 import gui.GameBoardPanel;
 import java.awt.Point;
+import units.DirectionVector;
+import units.DoublePoint;
 
 /**
  * Extension of Enemy which represents an enemy that moves around the board.
