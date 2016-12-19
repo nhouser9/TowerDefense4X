@@ -18,11 +18,13 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.mockito.Mockito;
 import units.Enemies.Burrower;
 import units.Enemies.Enemy;
+import units.Towers.Blocker;
 import units.Towers.Terrain;
 import units.Towers.Tower;
 import units.Unit;
@@ -40,9 +42,9 @@ public class GameBoardPanelTest {
     @Test
     public void Tick_ShouldTickAllTowers_AfterTowersPassedToAddUnit() {
         Unit fakeUnit1 = Mockito.mock(Tower.class);
-        Mockito.when(fakeUnit1.getPosition()).thenReturn(new Point(200, 200));
+        Mockito.when(fakeUnit1.getGridPosition()).thenReturn(new Point(1, 1));
         Unit fakeUnit2 = Mockito.mock(Tower.class);
-        Mockito.when(fakeUnit2.getPosition()).thenReturn(new Point(400, 400));
+        Mockito.when(fakeUnit2.getGridPosition()).thenReturn(new Point(2, 2));
 
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
         board.addUnit(fakeUnit1);
@@ -59,9 +61,9 @@ public class GameBoardPanelTest {
     @Test
     public void PaintComponent_ShouldDrawAllTowers_AfterTowersPassedToAddUnit() {
         Unit fakeUnit1 = Mockito.mock(Tower.class);
-        Mockito.when(fakeUnit1.getPosition()).thenReturn(new Point(200, 200));
+        Mockito.when(fakeUnit1.getGridPosition()).thenReturn(new Point(3, 2));
         Unit fakeUnit2 = Mockito.mock(Tower.class);
-        Mockito.when(fakeUnit2.getPosition()).thenReturn(new Point(400, 400));
+        Mockito.when(fakeUnit2.getGridPosition()).thenReturn(new Point(5, 4));
         Graphics fakeGraphics = Mockito.mock(Graphics.class);
 
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
@@ -203,5 +205,21 @@ public class GameBoardPanelTest {
         } catch (ArrayIndexOutOfBoundsException exception) {
             fail("Exception was expected to be handled but was thrown from method towerAtGridPosition().");
         }
+    }
+
+    /**
+     * Test of addUnit method, of class GameBoardPanel.
+     */
+    @Test
+    public void AddUnit_ShouldNotAddATower_IfAnEnemyExistsAtThatPosition() {
+        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        GameBoardPanel board = new GameBoardPanel(testBoardState);
+        Enemy testEnemy = new Burrower(0, 0, new Point(0, 0));
+        Tower testTower = new Blocker(0, 0);
+        
+        board.addUnit(testEnemy);
+        board.addUnit(testTower);
+        
+        Assert.assertEquals(board.towerAtGridPosition(new Point(0,0)), null);
     }
 }

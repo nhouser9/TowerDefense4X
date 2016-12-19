@@ -47,8 +47,8 @@ public class Burrower extends Mover {
      * @return the speed of a Burrower as a double
      */
     @Override
-    protected int getSpeed() {
-        return 1;
+    protected double getSpeed() {
+        return 100;
     }
     
     /**

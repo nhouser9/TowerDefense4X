@@ -42,7 +42,7 @@ public abstract class Mover extends Enemy {
      */
     public Mover(int xPosition, int yPosition, Point target) {
         super(xPosition, yPosition);
-        direction = new DirectionVector(getPosition(), target, getSpeed());
+        direction = new DirectionVector(getPosition(), target, getScaledSpeed());
     }
 
     /**
@@ -87,10 +87,18 @@ public abstract class Mover extends Enemy {
     }
 
     /**
+     * Method which translates a Mover's speed into a scaled speed, which is used to make the Mover appear to move at the same rate no matter how the board is resized.
+     * @return the Mover's speed scaled in relation to the board size
+     */
+    private double getScaledSpeed() {
+        return getSpeed() / GameBoardPanel.SQUARE_SIZE;
+    }
+    
+    /**
      * Method which defines how fast the Mover will move.
      *
      * @return a double representing the number of units the Mover will travel
      * per tick
      */
-    protected abstract int getSpeed();
+    protected abstract double getSpeed();
 }

@@ -14,27 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+package units.Towers;
 
 /**
- * Extension of JPanel which represents the GUI.
- *
+ * Enumeration of the available tower types.
+ * 
  * @author Nick Houser
  */
-public class GuiPanel extends JPanel {
-
-    /**
-     * Constructor which initializes the GUI, including adding dummy text and
-     * color.
-     */
-    public GuiPanel() {
-        add(new JLabel("GUI Text"));
-        setBackground(Color.RED);
-        setPreferredSize(new Dimension(100, 100));
-    }
+public enum TowerType {
+    BLOCKER,
+    GENERATOR,
+    SHOOTER
 }

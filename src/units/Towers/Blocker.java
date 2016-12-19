@@ -20,13 +20,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Class representing a unit of terrain. Every square is filled with this by
- * default. It does nothing and serves only as a removable impediment for
- * enemies.
- *
+ * Class which represents a puchasable Tower that does nothing but get in the way of Enemies. It has high enough health to withstand some attacks and is intended to be used as a blockade to protect more functional Towers.
+ * 
  * @author Nick Houser
  */
-public class Terrain extends Inactive {
+public class Blocker extends Inactive {
 
     /**
      * Constructor which calls the parent constructor to initialize position.
@@ -34,28 +32,28 @@ public class Terrain extends Inactive {
      * @param xPosition the x position where the user wants to create the Terrain
      * @param yPosition the y position where the user wants to create the Terrain
      */
-    public Terrain(int xPosition, int yPosition) {
+    public Blocker(int xPosition, int yPosition) {
         super(xPosition, yPosition);
     }
 
     /**
-     * Method which will return the initial health of a Terrain.
+     * Method which will return the initial health of a Blocker.
      * 
-     * @return the initial health of a Terrain
+     * @return the initial health of a Blocker
      */
     @Override
-    public int initialHealth() {
-        return 200;
+    protected int initialHealth() {
+        return 1000;
     }
 
     /**
-     * Method which draws a Terrain on the board.
+     * Method which draws a Blocker on the board.
      *
      * @param g the Graphics object to draw on
      */
     @Override
     public void drawSelf(Graphics g) {
-        g.setColor(new Color(200, 200, 100));
+        g.setColor(Color.GRAY);
         g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
     }
 }

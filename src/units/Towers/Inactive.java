@@ -16,46 +16,34 @@
  */
 package units.Towers;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import gui.GameBoardPanel;
 
 /**
- * Class representing a unit of terrain. Every square is filled with this by
- * default. It does nothing and serves only as a removable impediment for
- * enemies.
+ * Extension of Tower which disables ticking functionality. This is intended for
+ * implementation by units which will take no action during gameplay.
  *
  * @author Nick Houser
  */
-public class Terrain extends Inactive {
-
+public abstract class Inactive extends Tower {
+    
     /**
      * Constructor which calls the parent constructor to initialize position.
      *
      * @param xPosition the x position where the user wants to create the Terrain
      * @param yPosition the y position where the user wants to create the Terrain
      */
-    public Terrain(int xPosition, int yPosition) {
+    public Inactive(int xPosition, int yPosition) {
         super(xPosition, yPosition);
     }
-
+    
     /**
-     * Method which will return the initial health of a Terrain.
-     * 
-     * @return the initial health of a Terrain
-     */
-    @Override
-    public int initialHealth() {
-        return 200;
-    }
-
-    /**
-     * Method which draws a Terrain on the board.
+     * Method which does nothing because this unit should take no actions during
+     * gameplay.
      *
-     * @param g the Graphics object to draw on
+     * @param board the game board on which the unit is acting
      */
     @Override
-    public void drawSelf(Graphics g) {
-        g.setColor(new Color(200, 200, 100));
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+    public void tick(GameBoardPanel board) {
+        //do nothing
     }
 }

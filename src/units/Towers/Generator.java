@@ -68,7 +68,7 @@ public class Generator extends Powered {
     /**
      * Method that is called as part of the poweredTick method. Provides power
      * to nearby power consumers.
-     * 
+     *
      * @param board the game board to search for nearby units
      */
     private void providePower(GameBoardPanel board) {
@@ -88,8 +88,9 @@ public class Generator extends Powered {
                 }
 
                 Powered toPower = (Powered) towerAtPosition;
-                toPower.power(this);
-                powering.add(toPower);
+                if (toPower.power(this)) {
+                    powering.add(toPower);
+                }
             }
         }
     }

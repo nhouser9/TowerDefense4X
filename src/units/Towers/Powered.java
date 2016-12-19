@@ -50,11 +50,14 @@ public abstract class Powered extends Tower {
      * marks this unit as powered.
      *
      * @param provider the Generator providing power to this unit
+     * @return true if the power operation was successful, false otherwise
      */
-    public void power(Generator provider) {
+    public boolean power(Generator provider) {
         if (poweredBy == null) {
             poweredBy = provider;
+            return true;
         }
+        return false;
     }
 
     /**

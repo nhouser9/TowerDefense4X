@@ -16,9 +16,11 @@
  */
 package towerdefense4x;
 
+import gui.BoardMouseListener;
 import gui.BoardState;
 import gui.GameBoardPanel;
 import gui.GuiPanel;
+import gui.PurchasePanel;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
@@ -41,12 +43,21 @@ public class TowerDefense4X {
      */
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
+        
         JFrame gameWindow = new JFrame();
-        gameWindow.setLayout(new BoxLayout(gameWindow.getContentPane(), BoxLayout.Y_AXIS));
+        gameWindow.setLayout(new BoxLayout(gameWindow.getContentPane(), BoxLayout.X_AXIS));
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameWindow.add(new GuiPanel());
+        
+        GuiPanel gui = new GuiPanel();
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.INTEGRATIONTEST));
+        PurchasePanel buy = new PurchasePanel();
+        
+        board.addMouseListener(new BoardMouseListener(buy, board));
+        
+        gameWindow.add(gui);
         gameWindow.add(board);
+        gameWindow.add(buy);
+        
         gameWindow.pack();
         gameWindow.setResizable(false);
         gameWindow.setVisible(true);

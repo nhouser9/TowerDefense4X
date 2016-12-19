@@ -70,10 +70,14 @@ public class GameBoardPanel extends JPanel {
      */
     public void addUnit(Unit toAdd) {
         if (toAdd instanceof Tower) {
+            for (Enemy enemy : boardState.enemies) {
+                if (enemy.getGridPosition().equals(toAdd.getGridPosition())) {
+                    return;
+                }
+            }
+            
             Tower addTower = (Tower) toAdd;
-            int gridX = toAdd.getPosition().x / SQUARE_SIZE;
-            int gridY = toAdd.getPosition().y / SQUARE_SIZE;
-            boardState.towers[gridX][gridY] = addTower;
+            boardState.towers[toAdd.getGridPosition().x][toAdd.getGridPosition().y] = addTower;
         } else if (toAdd instanceof Enemy) {
             boardState.enemies.add((Enemy) toAdd);
         } else {
