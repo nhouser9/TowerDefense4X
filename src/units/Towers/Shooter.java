@@ -32,19 +32,19 @@ public class Shooter extends Powered {
 
     //the range of a shooter on the grid
     private static final int RANGE = 3;
-    
+
     //the amount of damage this unit deals to enemies
     private static final int DAMAGE = 3;
-    
+
     //the amount of time that must elapse before this unit can fire again
     private static final int FIRING_DELAY = 75;
-    
+
     //the amount of ticks that have elapsed since this unit fired
     private int firingCooldown;
-    
+
     //the last enemy fired upon, used for drawing graphics
     private Enemy lastTarget;
-    
+
     /**
      * Constructor which calls the inherited constructor to initialize position.
      *
@@ -72,7 +72,7 @@ public class Shooter extends Powered {
         if (firingCooldown < FIRING_DELAY) {
             return;
         }
-        
+
         Point topLeftOfRangeArea = new Point(getGridPosition().x - RANGE, getGridPosition().y - RANGE);
         Point bottomRightOfRangeArea = new Point(getGridPosition().x + RANGE, getGridPosition().y + RANGE);
         Enemy currentTarget = board.firstEnemyInArea(topLeftOfRangeArea, bottomRightOfRangeArea);
@@ -102,6 +102,19 @@ public class Shooter extends Powered {
     public void drawSelf(Graphics g) {
         g.setColor(Color.CYAN);
         g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
+    }
+
+    /**
+     * Method which supports drawing lines indicating which Enemies this Shooter
+     * is currently firing on. These use the drawLayer() method of
+     * ILayeredGraphics to support drawing them on top of everything else.
+     *
+     * @param g the Graphics object to draw on
+     */
+    @Override
+    public void drawLayer(Graphics g) {
+        super.drawLayer(g);
+        g.setColor(Color.BLACK);
         if (lastTarget != null) {
             g.setColor(Color.BLACK);
             g.drawLine(getCenterPosition().x, getCenterPosition().y, lastTarget.getCenterPosition().x, lastTarget.getCenterPosition().y);

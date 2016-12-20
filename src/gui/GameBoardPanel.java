@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 import units.Enemies.Enemy;
 import units.Enemies.Hive;
+import units.ILayeredGraphics;
 import units.Towers.Tower;
 import units.Unit;
 
@@ -93,7 +94,8 @@ public class GameBoardPanel extends JPanel {
      *
      * @param position a Point object representing the position to check
      * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the board
+     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
+     * board
      */
     public Tower towerAtPosition(Point position) throws ArrayIndexOutOfBoundsException {
         int gridX = Math.floorDiv(position.x, SQUARE_SIZE);
@@ -108,7 +110,8 @@ public class GameBoardPanel extends JPanel {
      *
      * @param position a Point object representing the grid position to check
      * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the board
+     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
+     * board
      */
     public Tower towerAtGridPosition(Point position) throws ArrayIndexOutOfBoundsException {
         return boardState.towers[position.x][position.y];
@@ -207,17 +210,69 @@ public class GameBoardPanel extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
+        paintWhite(g);
+        drawEnemies(g);
+        drawTowers(g);
+        drawEnemyLayers(g);
+        drawTowerLayers(g);
+    }
+    
+    /**
+     * Method which fills the entire board with white to prep for a new render.
+     * 
+     * @param g the Graphics object to draw on
+     */
+    private void paintWhite(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, SIZE, SIZE);
-
+    }
+    
+    /**
+     * Method which asks each Enemy to draw itself.
+     * @param g the Graphics object to draw on
+     */
+    private void drawEnemies(Graphics g) {
         for (Unit unit : boardState.enemies) {
             unit.drawSelf(g);
         }
-
+    }
+    
+    /**
+     * Method which asks each Tower to draw itself.
+     * @param g the Graphics object to draw on
+     */
+    private void drawTowers(Graphics g) {
         for (int x = 0; x < NUM_SQUARES; x++) {
             for (int y = 0; y < NUM_SQUARES; y++) {
                 if (boardState.towers[x][y] != null) {
                     boardState.towers[x][y].drawSelf(g);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Method which asks each Tnemy that draws top layer graphics to do so.
+     * @param g the Graphics object to draw on
+     */
+    private void drawEnemyLayers(Graphics g) {
+        for (Unit unit : boardState.enemies) {
+            if (unit instanceof ILayeredGraphics) {
+                ((ILayeredGraphics) unit).drawLayer(g);
+            }
+        }
+    }
+    
+    /**
+     * Method which asks each Tower that draws top layer graphics to do so.
+     * @param g the Graphics object to draw on
+     */
+    private void drawTowerLayers(Graphics g) {
+        for (int x = 0; x < NUM_SQUARES; x++) {
+            for (int y = 0; y < NUM_SQUARES; y++) {
+                Tower currentTower = boardState.towers[x][y];
+                if (currentTower != null && currentTower instanceof ILayeredGraphics) {
+                    ((ILayeredGraphics) currentTower).drawLayer(g);
                 }
             }
         }

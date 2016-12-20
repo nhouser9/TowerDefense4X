@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
+import units.ILayeredGraphics;
 
 /**
  * Class representing a Generator, a type of Tower that acts as a power source
@@ -155,9 +156,23 @@ public class Generator extends Powered {
     public void drawSelf(Graphics g) {
         g.setColor(Color.GREEN);
         g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
+    }
+
+    /**
+     * Method which supports drawing power lines indicating which other
+     * Generators this one is powering. These use the drawLayer() method of
+     * ILayeredGraphics to support drawing them on top of everything else.
+     *
+     * @param g the Graphics object to draw on
+     */
+    @Override
+    public void drawLayer(Graphics g) {
+        super.drawLayer(g);
         g.setColor(Color.BLACK);
         for (Powered powered : powering) {
-            g.drawLine(getCenterPosition().x, getCenterPosition().y, powered.getCenterPosition().x, powered.getCenterPosition().y);
+            if (powered instanceof Generator) {
+                g.drawLine(getCenterPosition().x, getCenterPosition().y, powered.getCenterPosition().x, powered.getCenterPosition().y);
+            }
         }
     }
 }

@@ -17,6 +17,9 @@
 package units.Towers;
 
 import gui.GameBoardPanel;
+import java.awt.Color;
+import java.awt.Graphics;
+import units.ILayeredGraphics;
 
 /**
  * Extension of Tower that represents a type of tower which consumes power; that
@@ -26,7 +29,7 @@ import gui.GameBoardPanel;
  *
  * @author Nick Houser
  */
-public abstract class Powered extends Tower {
+public abstract class Powered extends Tower implements ILayeredGraphics {
 
     //reference to the unit powering this unit
     private Powered poweredBy;
@@ -46,6 +49,15 @@ public abstract class Powered extends Tower {
     }
 
     /**
+     * Checks whether this Unit is receiving power.
+     *
+     * @return true if the Unit is powered, false othewise
+     */
+    public boolean isPowered() {
+        return poweredBy != null;
+    }
+
+    /**
      * Sets a passed generator as the power provider for this unit, which also
      * marks this unit as powered.
      *
@@ -53,7 +65,7 @@ public abstract class Powered extends Tower {
      * @return true if the power operation was successful, false otherwise
      */
     public boolean power(Generator provider) {
-        if (poweredBy == null) {
+        if (!isPowered()) {
             poweredBy = provider;
             return true;
         }
@@ -77,8 +89,23 @@ public abstract class Powered extends Tower {
      */
     @Override
     public void tick(GameBoardPanel board) {
-        if (poweredBy != null) {
+        if (isPowered()) {
             poweredTick(board);
+        }
+    }
+
+    /**
+     * Method which supports drawing strikethrough lines through Towers that are
+     * unpowered. These use the drawLayer() method of ILayeredGraphics to
+     * support drawing them on top of everything else.
+     *
+     * @param g the Graphics object to draw on
+     */
+    @Override
+    public void drawLayer(Graphics g) {
+        if (!isPowered()) {
+            g.setColor(Color.BLACK);
+            g.drawLine(getPosition().x, getPosition().y, getPosition().x + getScaledSize(), getPosition().y + getScaledSize());
         }
     }
 

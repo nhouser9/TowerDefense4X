@@ -22,9 +22,12 @@ import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import units.Enemies.Burrower;
 import units.Enemies.Enemy;
 import units.Towers.Blocker;
+import units.Towers.Generator;
 import units.Towers.Terrain;
 import units.Towers.Tower;
 import units.Unit;
@@ -73,6 +76,21 @@ public class GameBoardPanelTest {
         board.paintComponent(fakeGraphics);
         Mockito.verify(fakeUnit1).drawSelf(fakeGraphics);
         Mockito.verify(fakeUnit2).drawSelf(fakeGraphics);
+    }
+
+    /**
+     * Test of paintComponent method, of class GameBoardPanel.
+     */
+    @Test
+    public void PaintComponent_ShouldDrawLayeredGraphics_AfterLayeredGraphicsUnitAdded() {
+        Generator layeredGraphicsTower = mock(Generator.class);
+        when(layeredGraphicsTower.getGridPosition()).thenReturn(new Point(0, 0));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        board.addUnit(layeredGraphicsTower);
+
+        Graphics fakeGraphics = Mockito.mock(Graphics.class);
+        board.paintComponent(fakeGraphics);
+        Mockito.verify(layeredGraphicsTower).drawLayer(fakeGraphics);
     }
 
     /**
@@ -156,7 +174,7 @@ public class GameBoardPanelTest {
             fail("Expected positionOccupied to return false after adding an Enemy.");
         }
     }
-    
+
     /**
      * Test of towerAtPosition method, of class GameBoardPanel.
      */
@@ -166,8 +184,8 @@ public class GameBoardPanelTest {
         try {
             board.towerAtPosition(new Point(-100, -100));
             fail("Expected towerAtPosition to throw when passed an out of bounds position.");
-        }catch (Exception expected) {
-            
+        } catch (Exception expected) {
+
         }
     }
 
@@ -230,10 +248,10 @@ public class GameBoardPanelTest {
         GameBoardPanel board = new GameBoardPanel(testBoardState);
         Enemy testEnemy = new Burrower(0, 0, new Point(0, 0));
         Tower testTower = new Blocker(0, 0);
-        
+
         board.addUnit(testEnemy);
         board.addUnit(testTower);
-        
-        Assert.assertEquals(board.towerAtGridPosition(new Point(0,0)), null);
+
+        Assert.assertEquals(board.towerAtGridPosition(new Point(0, 0)), null);
     }
 }
