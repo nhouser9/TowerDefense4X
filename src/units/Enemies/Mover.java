@@ -58,8 +58,8 @@ public abstract class Mover extends Enemy {
         DoublePoint target = position.offset(direction);
 
         Point topLeft = target.toPoint();
-        Point topRight = new Point(topLeft.x + getSize(), topLeft.y);
-        Point bottomLeft = new Point(topLeft.x, topLeft.y + getSize());
+        Point topRight = new Point(topLeft.x + getScaledSize(), topLeft.y);
+        Point bottomLeft = new Point(topLeft.x, topLeft.y + getScaledSize());
         Point bottomRight = new Point(topRight.x, bottomLeft.y);
 
         if (topLeft.x <= 0 || topLeft.y <= 0) {
@@ -87,13 +87,16 @@ public abstract class Mover extends Enemy {
     }
 
     /**
-     * Method which translates a Mover's speed into a scaled speed, which is used to make the Mover appear to move at the same rate no matter how the board is resized.
+     * Method which translates a Mover's speed into a scaled speed, which is
+     * used to make the Mover appear to move at the same rate no matter how the
+     * board is resized.
+     *
      * @return the Mover's speed scaled in relation to the board size
      */
-    private double getScaledSpeed() {
-        return getSpeed() / GameBoardPanel.SQUARE_SIZE;
+    protected double getScaledSpeed() {
+        return GameBoardPanel.SQUARE_SIZE / getSpeed();
     }
-    
+
     /**
      * Method which defines how fast the Mover will move.
      *

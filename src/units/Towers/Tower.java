@@ -78,6 +78,6 @@ public abstract class Tower extends Unit {
      */
     @Override
     public int getSize() {
-        return GameBoardPanel.SQUARE_SIZE;
+        return 1;
     }
 }

@@ -56,6 +56,6 @@ public class Terrain extends Inactive {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(new Color(200, 200, 100));
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+        g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
     }
 }

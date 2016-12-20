@@ -54,6 +54,6 @@ public class Blocker extends Inactive {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(Color.GRAY);
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+        g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
     }
 }

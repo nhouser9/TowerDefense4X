@@ -71,7 +71,18 @@ public abstract class Unit {
      * @return the center Point of the unit
      */
     public Point getCenterPosition() {
-        return new Point(getPosition().x + getSize() / 2, getPosition().y + getSize() / 2);
+        return new Point(getPosition().x + getScaledSize() / 2, getPosition().y + getScaledSize() / 2);
+    }
+
+    /**
+     * Method which translates a Unit's size into a scaled size, which is used
+     * to make the Unit appear to take up the same portion of a square no matter
+     * how the board is resized.
+     *
+     * @return the Unit's size scaled in relation to the board size
+     */
+    public int getScaledSize() {
+        return Math.max(Math.floorDiv(GameBoardPanel.SQUARE_SIZE, getSize()), 1);
     }
 
     /**
@@ -86,7 +97,7 @@ public abstract class Unit {
      *
      * @return the draw size of the unit
      */
-    public abstract int getSize();
+    protected abstract int getSize();
 
     /**
      * Gets the current position of the unit in terms of its co-ordinates on the

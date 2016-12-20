@@ -32,9 +32,6 @@ public class Hive extends Enemy {
     
     //constant indicating how often Burrowers will be spawned
     protected static final int CADENCE_BURROWER = 100;
-
-    //point at which children will be spawned
-    private Point center;
     
     //timer variable which tracks ticks so the Hive knows when to spawn Enemies
     private long lifetime;
@@ -51,7 +48,6 @@ public class Hive extends Enemy {
      */
     public Hive(int xPosition, int yPosition) {
         super(xPosition - (xPosition % GameBoardPanel.SQUARE_SIZE), yPosition - (yPosition % GameBoardPanel.SQUARE_SIZE));
-        center = new Point(getPosition().x + getSize() / 2, getPosition().y + getSize() / 2);
         lifetime = 0;
         rng = new Random(System.currentTimeMillis());
     }
@@ -82,7 +78,7 @@ public class Hive extends Enemy {
      */
     @Override
     public int getSize() {
-        return GameBoardPanel.SQUARE_SIZE;
+        return 1;
     }
 
     /**
@@ -98,7 +94,7 @@ public class Hive extends Enemy {
             int yTarget = rng.nextInt();
             int xTarget = rng.nextInt();
             Point target = new Point(xTarget, yTarget);
-            board.addUnit(new Burrower(center.x, center.y, target));
+            board.addUnit(new Burrower(getCenterPosition().x, getCenterPosition().y, target));
         }
     }
 
@@ -110,6 +106,6 @@ public class Hive extends Enemy {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(Color.RED);
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+        g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
     }
 }

@@ -89,8 +89,9 @@ public class MoverTest {
 
         Terrain blocker = new Terrain(0, 0);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + mover.getSpeed()))).thenReturn(null);
-        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + mover.getSpeed() + mover.getSize()))).thenReturn(blocker);
+        int scaledSpeed = (int) Math.floor(mover.getScaledSpeed());
+        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + scaledSpeed))).thenReturn(null);
+        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + scaledSpeed + mover.getScaledSize()))).thenReturn(blocker);
 
         Tower success = mover.move(fakeBoard);
 

@@ -95,6 +95,6 @@ public class Burrower extends Mover {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+        g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
     }
 }

@@ -148,7 +148,7 @@ public class Generator extends Powered {
     @Override
     public void drawSelf(Graphics g) {
         g.setColor(Color.GREEN);
-        g.fillRect(getPosition().x, getPosition().y, getSize(), getSize());
+        g.fillRect(getPosition().x, getPosition().y, getScaledSize(), getScaledSize());
         g.setColor(Color.BLACK);
         for (Powered powered : powering) {
             g.drawLine(getCenterPosition().x, getCenterPosition().y, powered.getCenterPosition().x, powered.getCenterPosition().y);
