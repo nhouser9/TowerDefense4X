@@ -106,12 +106,12 @@ public class BoardState {
             }
         }
 
-        towers[4][1] = null;
-        enemies.add(new Hive(4 * GameBoardPanel.SQUARE_SIZE, GameBoardPanel.SQUARE_SIZE));
+        towers[4][2] = null;
+        enemies.add(new Hive(4 * GameBoardPanel.SQUARE_SIZE, 2 * GameBoardPanel.SQUARE_SIZE));
         
-        towers[4][3] = new Shooter(4 * GameBoardPanel.SQUARE_SIZE, 3 * GameBoardPanel.SQUARE_SIZE);
-        Generator baseGenerator = new Generator(4 * GameBoardPanel.SQUARE_SIZE, 4 * GameBoardPanel.SQUARE_SIZE);
+        towers[4][5] = new Shooter(4 * GameBoardPanel.SQUARE_SIZE, 5 * GameBoardPanel.SQUARE_SIZE);
+        Generator baseGenerator = new Generator(4 * GameBoardPanel.SQUARE_SIZE, 6 * GameBoardPanel.SQUARE_SIZE);
         baseGenerator.power(new Generator(-1000, -1000));
-        towers[4][4] = baseGenerator;
+        towers[4][6] = baseGenerator;
     }
 }

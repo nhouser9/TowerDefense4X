@@ -47,7 +47,7 @@ public class MoverTest {
         when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
 
         Mover mover = new Burrower(initialX, initialY, target);
-        DirectionVector moveDirection = new DirectionVector(mover.getPosition(), target, mover.getSpeed());
+        DirectionVector moveDirection = new DirectionVector(mover.getPosition(), target, mover.getScaledSpeed());
         Tower success = mover.move(fakeBoard);
 
         assertEquals(mover.position.x, initialX + moveDirection.xDirection, .01);

@@ -98,7 +98,9 @@ public abstract class Mover extends Enemy {
     }
 
     /**
-     * Method which defines how fast the Mover will move.
+     * Method which defines how fast the Mover will move. Because the board size
+     * is divided by this to achieve size-independent scaling, higher numbers
+     * are smaller.
      *
      * @return a double representing the number of units the Mover will travel
      * per tick

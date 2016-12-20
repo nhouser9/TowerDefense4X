@@ -16,13 +16,19 @@
  */
 package units.Enemies;
 
+import gui.BoardState;
 import gui.GameBoardPanel;
+import java.awt.Point;
+import java.util.LinkedList;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
 import units.Unit;
 
 /**
@@ -70,12 +76,55 @@ public class HiveTest {
     @Test
     public void Tick_ShouldSpawnABurrowerAtTheProperTimes() {
         Hive testHive = new Hive(0, 0);
-        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+
         for (int ticks = 0; ticks < Hive.CADENCE_BURROWER - 1; ticks++) {
-            testHive.tick(fakeBoard);
+            testHive.tick(board);
         }
-        verify(fakeBoard, never()).addUnit(any(Unit.class));
-        testHive.tick(fakeBoard);
-        verify(fakeBoard).addUnit(any(Unit.class));
+        for (Enemy enemy : board.allEnemies()) {
+            if (enemy instanceof Burrower) {
+                fail("Tick spawned a Burrower too soon.");
+            }
+        }
+
+        testHive.tick(board);
+        int burrowerCount = 0;
+        for (Enemy enemy : board.allEnemies()) {
+            if (enemy instanceof Burrower) {
+                burrowerCount = burrowerCount + 1;
+            }
+        }
+        if (burrowerCount != 1) {
+            fail("Tick did not spawn a Burrower soon enough.");
+        }
+    }
+
+    /**
+     * Test of tick method, of class Hive.
+     */
+    @Test
+    public void Tick_ShouldSpawnAQueenAtTheProperTimes() {
+        Hive testHive = new Hive(0, 0);
+        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+
+        for (int ticks = 0; ticks < Hive.CADENCE_QUEEN - 1; ticks++) {
+            testHive.tick(board);
+        }
+        for (Enemy enemy : board.allEnemies()) {
+            if (enemy instanceof Queen) {
+                fail("Tick spawned a Queen too soon.");
+            }
+        }
+
+        testHive.tick(board);
+        int queenCount = 0;
+        for (Enemy enemy : board.allEnemies()) {
+            if (enemy instanceof Queen) {
+                queenCount = queenCount + 1;
+            }
+        }
+        if (queenCount != 1) {
+            fail("Tick did not spawn a Queen soon enough.");
+        }
     }
 }

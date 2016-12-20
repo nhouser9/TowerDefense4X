@@ -37,12 +37,12 @@ public class GameBoardPanel extends JPanel {
     /**
      * Constant which defines how big each square on the board will be.
      */
-    public static final int SQUARE_SIZE = 100;
+    public static final int SQUARE_SIZE = 10;
 
     /*
      * Constant which defines how many squares are in the board.
      */
-    public static final int NUM_SQUARES = 9;
+    public static final int NUM_SQUARES = 90;
 
     /*
      * Constant which defines how big the panel is as a whole.
@@ -75,7 +75,7 @@ public class GameBoardPanel extends JPanel {
                     return;
                 }
             }
-            
+
             Tower addTower = (Tower) toAdd;
             boardState.towers[toAdd.getGridPosition().x][toAdd.getGridPosition().y] = addTower;
         } else if (toAdd instanceof Enemy) {
@@ -141,6 +141,39 @@ public class GameBoardPanel extends JPanel {
             }
         }
         return null;
+    }
+
+    /**
+     * Method which returns all Enemies.
+     *
+     * @return a LinkedList of all Enemies within the specified area
+     */
+    public LinkedList<Enemy> allEnemies() {
+        return boardState.enemies;
+    }
+
+    /**
+     * Method which returns all Enemies from the specified area. Does not find
+     * Hives, because they should not be target by Towers.
+     *
+     * @param topLeft the top left grid square of the search area
+     * @param bottomRight the bottom right grid square of the search area
+     * @return a LinkedList of all Enemies within the specified area
+     */
+    public LinkedList<Enemy> allEnemiesInArea(Point topLeft, Point bottomRight) {
+        LinkedList<Enemy> toReturn = new LinkedList<>();
+        for (Enemy enemy : boardState.enemies) {
+            if (enemy instanceof Hive) {
+                continue;
+            }
+
+            int gridX = enemy.getGridPosition().x;
+            int gridY = enemy.getGridPosition().y;
+            if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
+                toReturn.add(enemy);
+            }
+        }
+        return toReturn;
     }
 
     /**

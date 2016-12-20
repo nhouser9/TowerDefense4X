@@ -93,7 +93,9 @@ public abstract class Unit {
     protected abstract int initialHealth();
 
     /**
-     * Method which will return the draw size of the unit.
+     * Method which will return the draw size of the unit. Because the board
+     * size is divided by this to achieve size-independent scaling, higher
+     * numbers are smaller.
      *
      * @return the draw size of the unit
      */
@@ -116,16 +118,13 @@ public abstract class Unit {
     public abstract Point getGridPosition();
 
     /**
-     * Method which defines what action the unit will take during gameplay. Does
-     * nothing by default; implementations must override this if they wish to
-     * act. This will be called repeatedly by the main game loop to simulate
-     * continuous action.
+     * Method which defines what action the unit will take during gameplay. This
+     * will be called repeatedly by the main game loop to simulate continuous
+     * action.
      *
      * @param board the game board on which the unit is acting
      */
-    public void tick(GameBoardPanel board) {
-        //do nothing by default
-    }
+    public abstract void tick(GameBoardPanel board);
 
     /**
      * Method which asks the Unit to draw itself on the board.
