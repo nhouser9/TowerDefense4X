@@ -114,7 +114,7 @@ public class GameBoardPanelTest {
      * Test of towerAtPosition method, of class GameBoardPanel.
      */
     @Test
-    public void PositionOccupied_ShouldReturnATower_WhenATowerAddedAtThatPosition() {
+    public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
         board.addUnit(new Terrain(100, 100));
         if (board.towerAtPosition(new Point(100, 100)) == null) {
@@ -126,7 +126,7 @@ public class GameBoardPanelTest {
      * Test of towerAtPosition method, of class GameBoardPanel.
      */
     @Test
-    public void PositionOccupied_ShouldReturnATower_WhenATowerAddedAtAPositionWithinTheSameGridArea() {
+    public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtAPositionWithinTheSameGridArea() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
         board.addUnit(new Terrain(100, 100));
         if (board.towerAtPosition(new Point(105, 109)) == null) {
@@ -138,7 +138,7 @@ public class GameBoardPanelTest {
      * Test of towerAtPosition method, of class GameBoardPanel.
      */
     @Test
-    public void PositionOccupied_ShouldReturnNull_WhenNoTowerAddedAtThatPosition() {
+    public void TowerAtPosition_ShouldReturnNull_WhenNoTowerAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
         if (board.towerAtPosition(new Point(100, 100)) != null) {
             fail("Expected positionOccupied to return false after not adding a Tower.");
@@ -149,11 +149,25 @@ public class GameBoardPanelTest {
      * Test of towerAtPosition method, of class GameBoardPanel.
      */
     @Test
-    public void PositionOccupied_ShouldReturnNull_WhenAUnitAddedAtThatPosition() {
+    public void TowerAtPosition_ShouldReturnNull_WhenAUnitAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
         board.addUnit(new Burrower(100, 100, new Point(1, 1)));
         if (board.towerAtPosition(new Point(100, 100)) != null) {
             fail("Expected positionOccupied to return false after adding an Enemy.");
+        }
+    }
+    
+    /**
+     * Test of towerAtPosition method, of class GameBoardPanel.
+     */
+    @Test
+    public void TowerAtPosition_ShouldThrow_WhenPassedOutOfBoundsPosition() {
+        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        try {
+            board.towerAtPosition(new Point(-100, -100));
+            fail("Expected towerAtPosition to throw when passed an out of bounds position.");
+        }catch (Exception expected) {
+            
         }
     }
 
@@ -197,13 +211,13 @@ public class GameBoardPanelTest {
      * Test of towerAtGridPosition method, of class GameBoardPanel.
      */
     @Test
-    public void TowerAtGridPosition_ShouldNotThrow_WhenPassedInvalidIndeces() {
+    public void TowerAtGridPosition_ShouldThrow_WhenPassedInvalidIndeces() {
         BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
         try {
             board.towerAtGridPosition(new Point(-1, -1));
-        } catch (ArrayIndexOutOfBoundsException exception) {
             fail("Exception was expected to be handled but was thrown from method towerAtGridPosition().");
+        } catch (ArrayIndexOutOfBoundsException exception) {
         }
     }
 

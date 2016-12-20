@@ -104,19 +104,14 @@ public class MoverTest {
      * Test of move method, of class Enemy.
      */
     @Test
-    public void Move_ShouldFail_WhenMovingOffTheBoard() {
-        int initialX = 0;
-        int initialY = 0;
-
-        Mover mover = new Burrower(initialX, initialY, new Point(-1, -1));
+    public void Move_ShouldDestroyTheMover_WhenMovingOffTheBoard() {
+        Mover mover = new Burrower(0, 0, new Point(-1, -1));
 
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
+        when(fakeBoard.towerAtPosition(any(Point.class))).thenThrow(new ArrayIndexOutOfBoundsException());
 
         Tower success = mover.move(fakeBoard);
 
-        assertEquals(mover.position.x, initialX, .01);
-        assertEquals(mover.position.y, initialY, .01);
-        assertEquals(success, null);
+        assertEquals(mover.isDead(), true);
     }
 }

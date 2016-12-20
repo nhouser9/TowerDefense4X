@@ -48,8 +48,8 @@ public abstract class Mover extends Enemy {
     /**
      * Method which tries to move in target direction and returns the Tower that
      * got in the way if one exists. The move will fail if the Enemy's hitbox
-     * would intersect a Tower after the move. The move will also fail without
-     * returning a Tower if the move would exit the game board.
+     * would intersect a Tower after the move. The move will delete this Mover
+     * if it would try to move off the board.
      *
      * @param board the game board on which the move is being performed
      * @return the Tower that blocked this move, or null if the move succeeded
@@ -62,24 +62,21 @@ public abstract class Mover extends Enemy {
         Point bottomLeft = new Point(topLeft.x, topLeft.y + getScaledSize());
         Point bottomRight = new Point(topRight.x, bottomLeft.y);
 
-        if (topLeft.x <= 0 || topLeft.y <= 0) {
-            return null;
-        }
-        if (bottomRight.x >= GameBoardPanel.SIZE || bottomRight.y >= GameBoardPanel.SIZE) {
-            return null;
-        }
-
-        if (board.towerAtPosition(topLeft) != null) {
-            return board.towerAtPosition(topLeft);
-        }
-        if (board.towerAtPosition(topRight) != null) {
-            return board.towerAtPosition(topRight);
-        }
-        if (board.towerAtPosition(bottomLeft) != null) {
-            return board.towerAtPosition(bottomLeft);
-        }
-        if (board.towerAtPosition(bottomRight) != null) {
-            return board.towerAtPosition(bottomRight);
+        try {
+            if (board.towerAtPosition(topLeft) != null) {
+                return board.towerAtPosition(topLeft);
+            }
+            if (board.towerAtPosition(topRight) != null) {
+                return board.towerAtPosition(topRight);
+            }
+            if (board.towerAtPosition(bottomLeft) != null) {
+                return board.towerAtPosition(bottomLeft);
+            }
+            if (board.towerAtPosition(bottomRight) != null) {
+                return board.towerAtPosition(bottomRight);
+            }
+        } catch (ArrayIndexOutOfBoundsException movedOffBoard) {
+            destroy();
         }
 
         position = target;

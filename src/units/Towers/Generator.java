@@ -75,7 +75,13 @@ public class Generator extends Powered {
         for (int xSearch = -RANGE; xSearch <= RANGE; xSearch++) {
             for (int ySearch = -RANGE; ySearch <= RANGE; ySearch++) {
                 Point gridSearchPoint = new Point(xSearch + getGridPosition().x, ySearch + getGridPosition().y);
-                Tower towerAtPosition = board.towerAtGridPosition(gridSearchPoint);
+                Tower towerAtPosition;
+
+                try {
+                    towerAtPosition = board.towerAtGridPosition(gridSearchPoint);
+                } catch (ArrayIndexOutOfBoundsException offScreen) {
+                    continue;
+                }
 
                 if (towerAtPosition == null) {
                     continue;

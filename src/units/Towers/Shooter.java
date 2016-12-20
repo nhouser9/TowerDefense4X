@@ -37,7 +37,7 @@ public class Shooter extends Powered {
     private static final int DAMAGE = 3;
     
     //the amount of time that must elapse before this unit can fire again
-    private static final int FIRING_DELAY = 50;
+    private static final int FIRING_DELAY = 75;
     
     //the amount of ticks that have elapsed since this unit fired
     private int firingCooldown;

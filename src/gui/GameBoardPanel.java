@@ -37,12 +37,12 @@ public class GameBoardPanel extends JPanel {
     /**
      * Constant which defines how big each square on the board will be.
      */
-    public static final int SQUARE_SIZE = 10;
+    public static final int SQUARE_SIZE = 20;
 
     /*
      * Constant which defines how many squares are in the board.
      */
-    public static final int NUM_SQUARES = 90;
+    public static final int NUM_SQUARES = 45;
 
     /*
      * Constant which defines how big the panel is as a whole.
@@ -93,8 +93,9 @@ public class GameBoardPanel extends JPanel {
      *
      * @param position a Point object representing the position to check
      * @return the Tower at the passed position, or null if none exists
+     * @throws ArrayIndexOutOfBoundsException if passed a position not on the board
      */
-    public Tower towerAtPosition(Point position) {
+    public Tower towerAtPosition(Point position) throws ArrayIndexOutOfBoundsException {
         int gridX = Math.floorDiv(position.x, SQUARE_SIZE);
         int gridY = Math.floorDiv(position.y, SQUARE_SIZE);
         return towerAtGridPosition(new Point(gridX, gridY));
@@ -107,14 +108,9 @@ public class GameBoardPanel extends JPanel {
      *
      * @param position a Point object representing the grid position to check
      * @return the Tower at the passed position, or null if none exists
+     * @throws ArrayIndexOutOfBoundsException if passed a position not on the board
      */
-    public Tower towerAtGridPosition(Point position) {
-        if (position.x < 0 || position.y < 0) {
-            return null;
-        }
-        if (position.x >= NUM_SQUARES || position.y >= NUM_SQUARES) {
-            return null;
-        }
+    public Tower towerAtGridPosition(Point position) throws ArrayIndexOutOfBoundsException {
         return boardState.towers[position.x][position.y];
     }
 
