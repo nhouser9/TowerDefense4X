@@ -63,10 +63,19 @@ public class TowerDefense4X {
         gameWindow.setVisible(true);
 
         try {
+            long nextTick = System.currentTimeMillis();
+            long delta;
             while (true) {
-                Thread.sleep(TICK_LENGTH);
+                nextTick = nextTick + TICK_LENGTH;
+                
                 board.tick();
                 gameWindow.repaint();
+                
+                
+                delta = nextTick - System.currentTimeMillis();
+                if (delta > 0) {
+                    Thread.sleep(delta);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

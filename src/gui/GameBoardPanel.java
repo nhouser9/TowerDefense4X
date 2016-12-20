@@ -232,7 +232,7 @@ public class GameBoardPanel extends JPanel {
      * @param g the Graphics object to draw on
      */
     private void drawEnemies(Graphics g) {
-        for (Unit unit : boardState.enemies) {
+        for (Unit unit : (LinkedList<Enemy>) boardState.enemies.clone()) {
             unit.drawSelf(g);
         }
     }
@@ -256,7 +256,7 @@ public class GameBoardPanel extends JPanel {
      * @param g the Graphics object to draw on
      */
     private void drawEnemyLayers(Graphics g) {
-        for (Unit unit : boardState.enemies) {
+        for (Unit unit : (LinkedList<Enemy>) boardState.enemies.clone()) {
             if (unit instanceof ILayeredGraphics) {
                 ((ILayeredGraphics) unit).drawLayer(g);
             }

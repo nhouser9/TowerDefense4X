@@ -21,7 +21,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
-import units.ILayeredGraphics;
 
 /**
  * Class representing a Generator, a type of Tower that acts as a power source
