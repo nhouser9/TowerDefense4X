@@ -53,6 +53,9 @@ public class GameBoardPanel extends JPanel {
     //variable which tracks which units are currently on the board
     private BoardState boardState;
 
+    //variable which exposes search APIs for units on the board
+    private BoardSearch boardSearch;
+
     /**
      * Constructor which initializes the game board, including setting the size,
      * and filling the squares with their initial contents.
@@ -62,6 +65,7 @@ public class GameBoardPanel extends JPanel {
     public GameBoardPanel(BoardState intitialState) {
         setPreferredSize(new Dimension(SIZE, SIZE));
         boardState = intitialState;
+        boardSearch = new BoardSearch(boardState);
     }
 
     /**
@@ -87,92 +91,13 @@ public class GameBoardPanel extends JPanel {
     }
 
     /**
-     * Converts the passed co-ordinates to grid indices before delegating the
-     * search to the towerAtGridPositionMethod to find the tower at the passed
-     * position. This is used to ensure that Enemies cannot move freely into
-     * squares where the player has placed Towers.
+     * Method which returns an object that exposes various methods for searching
+     * the units on the board.
      *
-     * @param position a Point object representing the position to check
-     * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
-     * board
+     * @return a BoardSearch object which exposes many methods for searching
      */
-    public Tower towerAtPosition(Point position) throws ArrayIndexOutOfBoundsException {
-        int gridX = Math.floorDiv(position.x, SQUARE_SIZE);
-        int gridY = Math.floorDiv(position.y, SQUARE_SIZE);
-        return towerAtGridPosition(new Point(gridX, gridY));
-    }
-
-    /**
-     * Checks whether a given position on the grid imposed on the board is
-     * occupied by a Tower. This is used to ensure that Enemies cannot move
-     * freely into squares where the player has placed Towers.
-     *
-     * @param position a Point object representing the grid position to check
-     * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
-     * board
-     */
-    public Tower towerAtGridPosition(Point position) throws ArrayIndexOutOfBoundsException {
-        return boardState.towers[position.x][position.y];
-    }
-
-    /**
-     * Method which returns a single Enemy from the specified area. Does not
-     * find Hives, because they should not be target by Towers. Which enemy will
-     * be returned if multiple are found is undefined. Returns null if no
-     * enemies are found.
-     *
-     * @param topLeft the top left grid square of the search area
-     * @param bottomRight the bottom right grid square of the search area
-     * @return an Enemy within the specified area, or null if none are found
-     */
-    public Enemy firstEnemyInArea(Point topLeft, Point bottomRight) {
-        for (Enemy enemy : boardState.enemies) {
-            if (enemy instanceof Hive) {
-                continue;
-            }
-
-            int gridX = enemy.getGridPosition().x;
-            int gridY = enemy.getGridPosition().y;
-            if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
-                return enemy;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Method which returns all Enemies.
-     *
-     * @return a LinkedList of all Enemies within the specified area
-     */
-    public LinkedList<Enemy> allEnemies() {
-        return boardState.enemies;
-    }
-
-    /**
-     * Method which returns all Enemies from the specified area. Does not find
-     * Hives, because they should not be target by Towers.
-     *
-     * @param topLeft the top left grid square of the search area
-     * @param bottomRight the bottom right grid square of the search area
-     * @return a LinkedList of all Enemies within the specified area
-     */
-    public LinkedList<Enemy> allEnemiesInArea(Point topLeft, Point bottomRight) {
-        LinkedList<Enemy> toReturn = new LinkedList<>();
-        for (Enemy enemy : boardState.enemies) {
-            if (enemy instanceof Hive) {
-                continue;
-            }
-
-            int gridX = enemy.getGridPosition().x;
-            int gridY = enemy.getGridPosition().y;
-            if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
-                toReturn.add(enemy);
-            }
-        }
-        return toReturn;
+    public BoardSearch search() {
+        return boardSearch;
     }
 
     /**
@@ -216,19 +141,20 @@ public class GameBoardPanel extends JPanel {
         drawEnemyLayers(g);
         drawTowerLayers(g);
     }
-    
+
     /**
      * Method which fills the entire board with white to prep for a new render.
-     * 
+     *
      * @param g the Graphics object to draw on
      */
     private void paintWhite(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, SIZE, SIZE);
     }
-    
+
     /**
      * Method which asks each Enemy to draw itself.
+     *
      * @param g the Graphics object to draw on
      */
     private void drawEnemies(Graphics g) {
@@ -236,9 +162,10 @@ public class GameBoardPanel extends JPanel {
             unit.drawSelf(g);
         }
     }
-    
+
     /**
      * Method which asks each Tower to draw itself.
+     *
      * @param g the Graphics object to draw on
      */
     private void drawTowers(Graphics g) {
@@ -250,9 +177,10 @@ public class GameBoardPanel extends JPanel {
             }
         }
     }
-    
+
     /**
      * Method which asks each Tnemy that draws top layer graphics to do so.
+     *
      * @param g the Graphics object to draw on
      */
     private void drawEnemyLayers(Graphics g) {
@@ -262,9 +190,10 @@ public class GameBoardPanel extends JPanel {
             }
         }
     }
-    
+
     /**
      * Method which asks each Tower that draws top layer graphics to do so.
+     *
      * @param g the Graphics object to draw on
      */
     private void drawTowerLayers(Graphics g) {

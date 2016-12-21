@@ -63,17 +63,17 @@ public abstract class Mover extends Enemy {
         Point bottomRight = new Point(topRight.x, bottomLeft.y);
 
         try {
-            if (board.towerAtPosition(topLeft) != null) {
-                return board.towerAtPosition(topLeft);
+            if (board.search().towerAtPosition(topLeft) != null) {
+                return board.search().towerAtPosition(topLeft);
             }
-            if (board.towerAtPosition(topRight) != null) {
-                return board.towerAtPosition(topRight);
+            if (board.search().towerAtPosition(topRight) != null) {
+                return board.search().towerAtPosition(topRight);
             }
-            if (board.towerAtPosition(bottomLeft) != null) {
-                return board.towerAtPosition(bottomLeft);
+            if (board.search().towerAtPosition(bottomLeft) != null) {
+                return board.search().towerAtPosition(bottomLeft);
             }
-            if (board.towerAtPosition(bottomRight) != null) {
-                return board.towerAtPosition(bottomRight);
+            if (board.search().towerAtPosition(bottomRight) != null) {
+                return board.search().towerAtPosition(bottomRight);
             }
         } catch (ArrayIndexOutOfBoundsException movedOffBoard) {
             destroy();

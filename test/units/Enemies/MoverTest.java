@@ -16,6 +16,7 @@
  */
 package units.Enemies;
 
+import gui.BoardSearch;
 import units.Towers.Terrain;
 import units.Towers.Tower;
 import gui.GameBoardPanel;
@@ -44,7 +45,9 @@ public class MoverTest {
         Point target = new Point(initialX + 1, initialY + 3);
 
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(null);
 
         Mover mover = new Burrower(initialX, initialY, target);
         DirectionVector moveDirection = new DirectionVector(mover.getPosition(), target, mover.getScaledSpeed());
@@ -67,7 +70,9 @@ public class MoverTest {
 
         Terrain blocker = new Terrain(0, 0);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(blocker);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any(Point.class))).thenReturn(blocker);
 
         Mover mover = new Burrower(initialX, initialY, new Point(initialX + directionX, initialY + directionY));
         Tower success = mover.move(fakeBoard);
@@ -89,9 +94,11 @@ public class MoverTest {
 
         Terrain blocker = new Terrain(0, 0);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
         int scaledSpeed = (int) Math.floor(mover.getScaledSpeed());
-        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + scaledSpeed))).thenReturn(null);
-        when(fakeBoard.towerAtPosition(new Point(initialX, initialY + scaledSpeed + mover.getScaledSize()))).thenReturn(blocker);
+        when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed))).thenReturn(null);
+        when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed + mover.getScaledSize()))).thenReturn(blocker);
 
         Tower success = mover.move(fakeBoard);
 
@@ -108,9 +115,11 @@ public class MoverTest {
         Mover mover = new Burrower(0, 0, new Point(-1, -1));
 
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenThrow(new ArrayIndexOutOfBoundsException());
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenThrow(new ArrayIndexOutOfBoundsException());
 
-        Tower success = mover.move(fakeBoard);
+        mover.move(fakeBoard);
 
         assertEquals(mover.isDead(), true);
     }

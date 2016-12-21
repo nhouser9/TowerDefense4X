@@ -18,18 +18,8 @@ package units.Enemies;
 
 import gui.BoardState;
 import gui.GameBoardPanel;
-import java.awt.Point;
-import java.util.LinkedList;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.isA;
-import units.Unit;
 
 /**
  * Unit tests for the Hive class.
@@ -81,7 +71,7 @@ public class HiveTest {
         for (int ticks = 0; ticks < Hive.CADENCE_BURROWER - 1; ticks++) {
             testHive.tick(board);
         }
-        for (Enemy enemy : board.allEnemies()) {
+        for (Enemy enemy : board.search().allEnemies()) {
             if (enemy instanceof Burrower) {
                 fail("Tick spawned a Burrower too soon.");
             }
@@ -89,7 +79,7 @@ public class HiveTest {
 
         testHive.tick(board);
         int burrowerCount = 0;
-        for (Enemy enemy : board.allEnemies()) {
+        for (Enemy enemy : board.search().allEnemies()) {
             if (enemy instanceof Burrower) {
                 burrowerCount = burrowerCount + 1;
             }
@@ -110,7 +100,7 @@ public class HiveTest {
         for (int ticks = 0; ticks < Hive.CADENCE_QUEEN - 1; ticks++) {
             testHive.tick(board);
         }
-        for (Enemy enemy : board.allEnemies()) {
+        for (Enemy enemy : board.search().allEnemies()) {
             if (enemy instanceof Queen) {
                 fail("Tick spawned a Queen too soon.");
             }
@@ -118,7 +108,7 @@ public class HiveTest {
 
         testHive.tick(board);
         int queenCount = 0;
-        for (Enemy enemy : board.allEnemies()) {
+        for (Enemy enemy : board.search().allEnemies()) {
             if (enemy instanceof Queen) {
                 queenCount = queenCount + 1;
             }

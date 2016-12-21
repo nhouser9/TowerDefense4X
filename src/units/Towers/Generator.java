@@ -72,30 +72,16 @@ public class Generator extends Powered {
      * @param board the game board to search for nearby units
      */
     private void providePower(GameBoardPanel board) {
-        for (int xSearch = -RANGE; xSearch <= RANGE; xSearch++) {
-            for (int ySearch = -RANGE; ySearch <= RANGE; ySearch++) {
-                Point gridSearchPoint = new Point(xSearch + getGridPosition().x, ySearch + getGridPosition().y);
-                Tower towerAtPosition;
-
-                try {
-                    towerAtPosition = board.towerAtGridPosition(gridSearchPoint);
-                } catch (ArrayIndexOutOfBoundsException offScreen) {
-                    continue;
-                }
-
-                if (towerAtPosition == null) {
-                    continue;
-                }
-                if (!Powered.class.isAssignableFrom(towerAtPosition.getClass())) {
-                    continue;
-                }
-                if (towerAtPosition == this) {
-                    continue;
-                }
-
-                Powered toPower = (Powered) towerAtPosition;
-                if (toPower.power(this)) {
+        Point searchTopLeft = new Point(getGridPosition().x - RANGE, getGridPosition().y - RANGE);
+        Point searchBottomRight = new Point(getGridPosition().x + RANGE, getGridPosition().y + RANGE);
+        LinkedList<Tower> towersInRange = board.search().allTowersInArea(searchTopLeft, searchBottomRight);
+        
+        for (Tower inRange : towersInRange) {
+            if (inRange != this && Powered.class.isAssignableFrom(inRange.getClass())) {
+                Powered toPower = (Powered) inRange;
+                if (!toPower.isPowered()) {
                     powering.add(toPower);
+                    toPower.power(this);
                 }
             }
         }

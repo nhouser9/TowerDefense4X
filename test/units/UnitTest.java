@@ -20,6 +20,7 @@ import units.Enemies.Burrower;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import units.Towers.Healer;
 
 /**
  * Unit tests for the Unit class.
@@ -55,5 +56,46 @@ public class UnitTest {
     public void IsDead_ShouldReturnFalse_Initially() {
         Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
         assertEquals(false, testUnit.isDead());
+    }
+    
+    /**
+     * Test of isDamaged method, of class Unit.
+     */
+    @Test
+    public void IsDamaged_ShouldReturnFalse_Initially() {
+        Healer testUnit = new Healer(0, 0);
+        assertEquals(false, testUnit.isDamaged());
+    }
+    
+    /**
+     * Test of isDamaged method, of class Unit.
+     */
+    @Test
+    public void IsDamaged_ShouldReturnTrue_AfterTakingDamage() {
+        Healer testUnit = new Healer(0, 0);
+        testUnit.changeHealth(-1);
+        assertEquals(true, testUnit.isDamaged());
+    }
+    
+    /**
+     * Test of isDamaged method, of class Unit.
+     */
+    @Test
+    public void IsDamaged_ShouldReturnFalse_AfterTakingDamageThenHealing() {
+        Healer testUnit = new Healer(0, 0);
+        testUnit.changeHealth(-1);
+        testUnit.changeHealth(1);
+        assertEquals(false, testUnit.isDamaged());
+    }
+    
+    /**
+     * Test of changeHealth method, of class Unit.
+     */
+    @Test
+    public void ChangeHealth_ShouldNotSetHealthAboveInitialHealth() {
+        Unit testUnit = new Healer(0, 0);
+        testUnit.changeHealth(1);
+        testUnit.changeHealth(-testUnit.initialHealth());
+        assertEquals(true, testUnit.isDead());
     }
 }

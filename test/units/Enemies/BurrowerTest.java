@@ -16,6 +16,7 @@
  */
 package units.Enemies;
 
+import gui.BoardSearch;
 import gui.GameBoardPanel;
 import java.awt.Point;
 import static org.junit.Assert.assertEquals;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 import units.DirectionVector;
 import units.Towers.Terrain;
 import units.Towers.Tower;
@@ -43,7 +45,9 @@ public class BurrowerTest {
     @Test
     public void Tick_ShouldCallMoveMethod() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(new Terrain(0, 0));
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
 
         Burrower testBurrower = spy(new Burrower(0, 0, new Point(1, 1)));
 
@@ -58,8 +62,10 @@ public class BurrowerTest {
     @Test
     public void Tick_ShouldAttack_WhenMoveFails() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
         Tower fakeBlocker = mock(Terrain.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(fakeBlocker);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
 
         Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
 
@@ -74,7 +80,9 @@ public class BurrowerTest {
     @Test
     public void Tick_ShouldMoveTowardsThePassedPoint() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(null);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(null);
 
         int initialX = 1;
         int initialY = 1;
@@ -99,9 +107,11 @@ public class BurrowerTest {
     @Test
     public void Tick_ShouldMarkTheBurrowerForDeath_WhenItDestroysATower() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
         Tower fakeBlocker = mock(Terrain.class);
         when(fakeBlocker.isDead()).thenReturn(true);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(fakeBlocker);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
 
         Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
 

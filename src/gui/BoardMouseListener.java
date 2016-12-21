@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import units.Towers.Blocker;
 import units.Towers.Generator;
+import units.Towers.Healer;
 import units.Towers.Shooter;
 import units.Towers.TowerType;
 
@@ -67,6 +68,9 @@ public class BoardMouseListener implements MouseListener {
                     break;
                 case SHOOTER:
                     gameBoard.addUnit(new Shooter(e.getX(), e.getY()));
+                    break;
+                case HEALER:
+                    gameBoard.addUnit(new Healer(e.getX(), e.getY()));
                     break;
             }
         }catch (Exception noSelection) {

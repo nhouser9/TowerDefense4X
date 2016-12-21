@@ -16,8 +16,8 @@
  */
 package units.Enemies;
 
+import gui.BoardSearch;
 import gui.GameBoardPanel;
-import java.awt.Graphics;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -42,7 +42,9 @@ public class QueenTest {
     @Test
     public void Tick_ShouldCallMoveMethod() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(new Terrain(0, 0));
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
 
         Queen testQueen = spy(new Queen(0, 0, new Point(1, 1)));
 
@@ -57,7 +59,9 @@ public class QueenTest {
     @Test
     public void Tick_ShouldSpawnAHiveAndDie_AfterTheCooldownHasElapsed() {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        when(fakeBoard.towerAtPosition(any(Point.class))).thenReturn(new Terrain(0, 0));
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
 
         Queen testQueen = spy(new Queen(0, 0, new Point(1, 1)));
 

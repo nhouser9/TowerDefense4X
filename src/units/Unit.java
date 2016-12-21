@@ -40,12 +40,23 @@ public abstract class Unit {
     }
 
     /**
-     * Method which exposes health for modification.
+     * Method which exposes health for modification. Does not allow health to be
+     * set above its initial value.
      *
      * @param delta the amount to increment the health
      */
     public void changeHealth(int delta) {
         health = health + delta;
+        health = Math.min(initialHealth(), health);
+    }
+
+    /**
+     * Method which checks whether this Unit is at full health.
+     *
+     * @return false if the Unit is at full health, true othewise
+     */
+    public boolean isDamaged() {
+        return (health != initialHealth());
     }
 
     /**

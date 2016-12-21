@@ -68,6 +68,7 @@ public class Shooter extends Powered {
     @Override
     protected void poweredTick(GameBoardPanel board) {
         lastTarget = null;
+        
         firingCooldown = firingCooldown + 1;
         if (firingCooldown < FIRING_DELAY) {
             return;
@@ -75,7 +76,7 @@ public class Shooter extends Powered {
 
         Point topLeftOfRangeArea = new Point(getGridPosition().x - RANGE, getGridPosition().y - RANGE);
         Point bottomRightOfRangeArea = new Point(getGridPosition().x + RANGE, getGridPosition().y + RANGE);
-        Enemy currentTarget = board.firstEnemyInArea(topLeftOfRangeArea, bottomRightOfRangeArea);
+        Enemy currentTarget = board.search().firstEnemyInArea(topLeftOfRangeArea, bottomRightOfRangeArea);
         if (currentTarget != null) {
             currentTarget.changeHealth(-DAMAGE);
             firingCooldown = 0;

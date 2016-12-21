@@ -24,5 +24,6 @@ package units.Towers;
 public enum TowerType {
     BLOCKER,
     GENERATOR,
-    SHOOTER
+    SHOOTER,
+    HEALER
 }
