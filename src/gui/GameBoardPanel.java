@@ -56,7 +56,7 @@ public class GameBoardPanel extends JPanel {
         boardSearch = new BoardSearch(boardState);
         setPreferredSize(new Dimension(SIZE, SIZE));
     }
-
+    
     /**
      * Method which exposes the square size of the current board state.
      *

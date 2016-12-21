@@ -41,8 +41,12 @@ public class BoardSearchTest {
     public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(new Terrain(100, 100, board.getSquareSize()));
-        if (board.search().towerAtPosition(new Point(100, 100)) == null) {
-            fail("Expected positionOccupied to return true after adding a Tower.");
+        try {
+            if (board.search().towerAtPosition(new Point(100, 100)) == null) {
+                fail("Expected positionOccupied to return true after adding a Tower.");
+            }
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
         }
     }
 
@@ -53,8 +57,12 @@ public class BoardSearchTest {
     public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtAPositionWithinTheSameGridArea() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(new Terrain(100, 100, board.getSquareSize()));
-        if (board.search().towerAtPosition(new Point(105, 109)) == null) {
-            fail("Expected positionOccupied to return true after adding a Tower.");
+        try {
+            if (board.search().towerAtPosition(new Point(105, 109)) == null) {
+                fail("Expected positionOccupied to return true after adding a Tower.");
+            }
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
         }
     }
 
@@ -64,8 +72,12 @@ public class BoardSearchTest {
     @Test
     public void TowerAtPosition_ShouldReturnNull_WhenNoTowerAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
-        if (board.search().towerAtPosition(new Point(100, 100)) != null) {
-            fail("Expected positionOccupied to return false after not adding a Tower.");
+        try {
+            if (board.search().towerAtPosition(new Point(100, 100)) != null) {
+                fail("Expected positionOccupied to return false after not adding a Tower.");
+            }
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
         }
     }
 
@@ -76,8 +88,12 @@ public class BoardSearchTest {
     public void TowerAtPosition_ShouldReturnNull_WhenAUnitAddedAtThatPosition() {
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(new Burrower(100, 100, new Point(1, 1), board.getSquareSize()));
-        if (board.search().towerAtPosition(new Point(100, 100)) != null) {
-            fail("Expected positionOccupied to return false after adding an Enemy.");
+        try {
+            if (board.search().towerAtPosition(new Point(100, 100)) != null) {
+                fail("Expected positionOccupied to return false after adding an Enemy.");
+            }
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
         }
     }
 
@@ -90,7 +106,7 @@ public class BoardSearchTest {
         try {
             board.search().towerAtPosition(new Point(-100, -100));
             fail("Expected towerAtPosition to throw when passed an out of bounds position.");
-        } catch (Exception expected) {
+        } catch (OffscreenException expected) {
 
         }
     }
@@ -105,7 +121,7 @@ public class BoardSearchTest {
         try {
             board.search().towerAtGridPosition(new Point(-1, -1));
             fail("Exception was expected to be handled but was thrown from method towerAtGridPosition().");
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (OffscreenException exception) {
         }
     }
 
@@ -122,7 +138,11 @@ public class BoardSearchTest {
         board.addUnit(testEnemy);
         board.addUnit(testTower);
 
-        Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+        try {
+            Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
     }
 
     /**

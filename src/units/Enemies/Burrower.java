@@ -83,9 +83,6 @@ public class Burrower extends Mover {
         Tower blocker = move(board);
         if (blocker != null) {
             blocker.changeHealth(-1);
-            if (blocker.isDead()) {
-                destroy();
-            }
         }
     }
 

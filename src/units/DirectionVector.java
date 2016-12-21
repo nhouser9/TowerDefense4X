@@ -54,4 +54,22 @@ public class DirectionVector {
         this.xDirection = xDirection;
         this.yDirection = yDirection;
     }
+    
+    /**
+     * Gets a version of this direction vector that has the x direction inverted.
+     * 
+     * @return an x-inverted version of this direction
+     */
+    public DirectionVector invertX() {
+        return new DirectionVector(-xDirection, yDirection);
+    }
+    
+    /**
+     * Gets a version of this direction vector that has the y direction inverted.
+     * 
+     * @return an y-inverted version of this direction
+     */
+    public DirectionVector invertY() {
+        return new DirectionVector(xDirection, -yDirection);
+    }
 }

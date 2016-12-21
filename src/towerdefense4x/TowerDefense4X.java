@@ -49,8 +49,8 @@ public class TowerDefense4X {
         gameWindow.setLayout(new BoxLayout(gameWindow.getContentPane(), BoxLayout.X_AXIS));
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        GuiPanel gui = new GuiPanel();
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.INTEGRATIONTEST));
+        GuiPanel gui = new GuiPanel();
         PurchasePanel buy = new PurchasePanel();
         
         board.addMouseListener(new BoardMouseListener(buy, board));

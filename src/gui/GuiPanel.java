@@ -16,8 +16,9 @@
  */
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -33,8 +34,23 @@ public class GuiPanel extends JPanel {
      * color.
      */
     public GuiPanel() {
-        add(new JLabel("GUI Text"));
-        setBackground(Color.RED);
-        setPreferredSize(new Dimension(100, 100));
+        setLayout(new GridLayout(0, 1));
+        
+        add(new JLabel("Time Left:"));
+        
+        JLabel timeLabel = new JLabel();
+        add(timeLabel);
+        
+        JButton retry = new JButton("Retry");
+        retry.addActionListener((ActionEvent e) -> {
+            
+        });
+        add(retry);
+
+        JButton mainMenu = new JButton("Menu");
+        mainMenu.addActionListener((ActionEvent e) -> {
+            
+        });
+        add(mainMenu);
     }
 }

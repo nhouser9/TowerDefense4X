@@ -18,6 +18,7 @@ package units.Enemies;
 
 import gui.BoardSearch;
 import gui.GameBoardPanel;
+import gui.OffscreenException;
 import java.awt.Point;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -47,7 +48,11 @@ public class BurrowerTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Burrower testBurrower = spy(new Burrower(0, 0, new Point(1, 1), 1));
 
@@ -65,7 +70,11 @@ public class BurrowerTest {
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
         Tower fakeBlocker = mock(Terrain.class);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Burrower testBurrower = new Burrower(5, 5, new Point(1, 1), 1);
 
@@ -82,7 +91,11 @@ public class BurrowerTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(null);
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(null);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         int initialX = 1;
         int initialY = 1;
@@ -99,26 +112,5 @@ public class BurrowerTest {
 
         assertEquals(toTargetAfterTick.xDirection, toTargetBeforeTick.xDirection, .1);
         assertEquals(toTargetAfterTick.yDirection, toTargetBeforeTick.yDirection, .1);
-    }
-
-    /**
-     * Test of tick method, of class Burrower.
-     */
-    @Test
-    public void Tick_ShouldMarkTheBurrowerForDeath_WhenItDestroysATower() {
-        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        BoardSearch fakeSearch = mock(BoardSearch.class);
-        when(fakeBoard.search()).thenReturn(fakeSearch);
-        Tower fakeBlocker = mock(Terrain.class);
-        when(fakeBlocker.isDead()).thenReturn(true);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
-
-        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1), 1);
-
-        testBurrower.tick(fakeBoard);
-
-        if (!testBurrower.isDead()) {
-            fail("The Burrower did not die after destroying a Tower.");
-        }
     }
 }

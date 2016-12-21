@@ -49,10 +49,9 @@ public class BoardSearch {
      *
      * @param position a Point object representing the position to check
      * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
-     * board
+     * @throws OffscreenException if passed a position not on the board
      */
-    public Tower towerAtPosition(Point position) throws ArrayIndexOutOfBoundsException {
+    public Tower towerAtPosition(Point position) throws OffscreenException {
         int gridX = Math.floorDiv(position.x, boardState.getSquareSize());
         int gridY = Math.floorDiv(position.y, boardState.getSquareSize());
         return towerAtGridPosition(new Point(gridX, gridY));
@@ -65,11 +64,31 @@ public class BoardSearch {
      *
      * @param position a Point object representing the grid position to check
      * @return the Tower at the passed position, or null if none exists
-     * @throws ArrayIndexOutOfBoundsException if passed a position not on the
-     * board
+     * @throws OffscreenException if passed a position not on the board
      */
-    public Tower towerAtGridPosition(Point position) throws ArrayIndexOutOfBoundsException {
-        return boardState.towers[position.x][position.y];
+    public Tower towerAtGridPosition(Point position) throws OffscreenException {
+        try {
+            return boardState.towers[position.x][position.y];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            boolean left = false;
+            boolean right = false;
+            boolean top = false;
+            boolean bottom = false;
+
+            if (position.x < 0) {
+                left = true;
+            } else if (position.x >= boardState.getNumSquares()) {
+                right = true;
+            }
+
+            if (position.y < 0) {
+                top = true;
+            } else if (position.y >= boardState.getNumSquares()) {
+                bottom = true;
+            }
+
+            throw new OffscreenException(left, right, top, bottom);
+        }
     }
 
     /**
@@ -88,7 +107,7 @@ public class BoardSearch {
 
                 try {
                     towerAtPosition = towerAtGridPosition(new Point(xSearch, ySearch));
-                } catch (ArrayIndexOutOfBoundsException offScreen) {
+                } catch (OffscreenException offScreen) {
                     continue;
                 }
 
@@ -139,7 +158,7 @@ public class BoardSearch {
 
     /**
      * Helper method which converts an absolute position to a grid position.
-     * 
+     *
      * @param absolute the absolute position
      * @return the equivalent grid position
      */

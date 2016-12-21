@@ -32,7 +32,7 @@ import java.util.LinkedList;
 public class Generator extends Powered {
 
     //the range of a Generator on the grid
-    private static final int RANGE = 2;
+    private static final int RANGE = 1;
 
     //list of units being powered by this generator
     private LinkedList<Powered> powering;
@@ -76,7 +76,7 @@ public class Generator extends Powered {
         Point searchTopLeft = new Point(getGridPosition().x - RANGE, getGridPosition().y - RANGE);
         Point searchBottomRight = new Point(getGridPosition().x + RANGE, getGridPosition().y + RANGE);
         LinkedList<Tower> towersInRange = board.search().allTowersInArea(searchTopLeft, searchBottomRight);
-        
+
         for (Tower inRange : towersInRange) {
             if (inRange != this && Powered.class.isAssignableFrom(inRange.getClass())) {
                 Powered toPower = (Powered) inRange;
@@ -156,9 +156,7 @@ public class Generator extends Powered {
         super.drawLayer(g);
         g.setColor(Color.BLACK);
         for (Powered powered : powering) {
-            if (powered instanceof Generator) {
-                g.drawLine(getCenterPosition().x, getCenterPosition().y, powered.getCenterPosition().x, powered.getCenterPosition().y);
-            }
+            g.drawLine(getCenterPosition().x, getCenterPosition().y, powered.getCenterPosition().x, powered.getCenterPosition().y);
         }
     }
 }

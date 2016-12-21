@@ -177,6 +177,10 @@ public class GameBoardPanelTest {
         board.addUnit(testEnemy);
         board.addUnit(testTower);
 
-        Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+        try {
+            Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
     }
 }

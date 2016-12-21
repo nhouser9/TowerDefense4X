@@ -20,6 +20,7 @@ import gui.BoardSearch;
 import units.Towers.Terrain;
 import units.Towers.Tower;
 import gui.GameBoardPanel;
+import gui.OffscreenException;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -47,7 +48,11 @@ public class MoverTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(null);
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(null);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Mover mover = new Burrower(initialX, initialY, target, 1);
         DirectionVector moveDirection = new DirectionVector(mover.getPosition(), target, mover.getScaledSpeed());
@@ -72,7 +77,11 @@ public class MoverTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any(Point.class))).thenReturn(blocker);
+        try {
+            when(fakeSearch.towerAtPosition(any(Point.class))).thenReturn(blocker);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Mover mover = new Burrower(initialX, initialY, new Point(initialX + directionX, initialY + directionY), 1);
         Tower success = mover.move(fakeBoard);
@@ -97,30 +106,17 @@ public class MoverTest {
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
         int scaledSpeed = (int) Math.floor(mover.getScaledSpeed());
-        when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed))).thenReturn(null);
-        when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed + mover.getScaledSize()))).thenReturn(blocker);
+        try {
+            when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed))).thenReturn(null);
+            when(fakeSearch.towerAtPosition(new Point(initialX, initialY + scaledSpeed + mover.getScaledSize()))).thenReturn(blocker);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Tower success = mover.move(fakeBoard);
 
         assertEquals(mover.position.x, initialX, .01);
         assertEquals(mover.position.y, initialY, .01);
         assertEquals(success, blocker);
-    }
-
-    /**
-     * Test of move method, of class Enemy.
-     */
-    @Test
-    public void Move_ShouldDestroyTheMover_WhenMovingOffTheBoard() {
-        Mover mover = new Burrower(0, 0, new Point(-1, -1), 1);
-
-        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        BoardSearch fakeSearch = mock(BoardSearch.class);
-        when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenThrow(new ArrayIndexOutOfBoundsException());
-
-        mover.move(fakeBoard);
-
-        assertEquals(mover.isDead(), true);
     }
 }

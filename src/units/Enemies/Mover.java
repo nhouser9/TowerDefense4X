@@ -18,6 +18,7 @@ package units.Enemies;
 
 import units.Towers.Tower;
 import gui.GameBoardPanel;
+import gui.OffscreenException;
 import java.awt.Point;
 import units.DirectionVector;
 import units.DoublePoint;
@@ -76,8 +77,14 @@ public abstract class Mover extends Enemy {
             if (board.search().towerAtPosition(bottomRight) != null) {
                 return board.search().towerAtPosition(bottomRight);
             }
-        } catch (ArrayIndexOutOfBoundsException movedOffBoard) {
-            destroy();
+        } catch (OffscreenException movedOffBoard) {
+            if (movedOffBoard.offscreenTop || movedOffBoard.offscreenBottom) {
+                direction = direction.invertY();
+            }
+            
+            if (movedOffBoard.offscreenLeft || movedOffBoard.offscreenRight) {
+                direction = direction.invertX();
+            }
         }
 
         position = target;

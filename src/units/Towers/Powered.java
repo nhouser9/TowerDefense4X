@@ -107,6 +107,7 @@ public abstract class Powered extends Tower implements ILayeredGraphics {
         if (!isPowered()) {
             g.setColor(Color.BLACK);
             g.drawLine(getPosition().x, getPosition().y, getPosition().x + getScaledSize(), getPosition().y + getScaledSize());
+            g.drawLine(getPosition().x + getScaledSize(), getPosition().y, getPosition().x, getPosition().y + getScaledSize());
         }
     }
 

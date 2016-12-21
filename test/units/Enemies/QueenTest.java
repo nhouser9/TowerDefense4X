@@ -18,6 +18,7 @@ package units.Enemies;
 
 import gui.BoardSearch;
 import gui.GameBoardPanel;
+import gui.OffscreenException;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -44,7 +45,11 @@ public class QueenTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Queen testQueen = spy(new Queen(0, 0, new Point(1, 1), 1));
 
@@ -61,7 +66,11 @@ public class QueenTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        try {
+            when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
 
         Queen testQueen = spy(new Queen(0, 0, new Point(1, 1), 1));
 
