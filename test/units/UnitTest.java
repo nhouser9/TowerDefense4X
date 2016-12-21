@@ -34,7 +34,7 @@ public class UnitTest {
      */
     @Test
     public void IsDead_ShouldReturnTrue_AfterSubtractingAUnitsInitialHealth() {
-        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1), 4);
         testUnit.changeHealth(0 - testUnit.initialHealth());
         assertEquals(true, testUnit.isDead());
     }
@@ -44,7 +44,7 @@ public class UnitTest {
      */
     @Test
     public void IsDead_ShouldReturnTrue_AfterCallingDestroy() {
-        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1), 1);
         testUnit.destroy();
         assertEquals(true, testUnit.isDead());
     }
@@ -54,7 +54,7 @@ public class UnitTest {
      */
     @Test
     public void IsDead_ShouldReturnFalse_Initially() {
-        Burrower testUnit = new Burrower(0, 0, new Point(1, 1));
+        Burrower testUnit = new Burrower(0, 0, new Point(1, 1), 1);
         assertEquals(false, testUnit.isDead());
     }
     
@@ -63,7 +63,7 @@ public class UnitTest {
      */
     @Test
     public void IsDamaged_ShouldReturnFalse_Initially() {
-        Healer testUnit = new Healer(0, 0);
+        Healer testUnit = new Healer(0, 0, 1);
         assertEquals(false, testUnit.isDamaged());
     }
     
@@ -72,7 +72,7 @@ public class UnitTest {
      */
     @Test
     public void IsDamaged_ShouldReturnTrue_AfterTakingDamage() {
-        Healer testUnit = new Healer(0, 0);
+        Healer testUnit = new Healer(0, 0, 1);
         testUnit.changeHealth(-1);
         assertEquals(true, testUnit.isDamaged());
     }
@@ -82,7 +82,7 @@ public class UnitTest {
      */
     @Test
     public void IsDamaged_ShouldReturnFalse_AfterTakingDamageThenHealing() {
-        Healer testUnit = new Healer(0, 0);
+        Healer testUnit = new Healer(0, 0, 2);
         testUnit.changeHealth(-1);
         testUnit.changeHealth(1);
         assertEquals(false, testUnit.isDamaged());
@@ -93,7 +93,7 @@ public class UnitTest {
      */
     @Test
     public void ChangeHealth_ShouldNotSetHealthAboveInitialHealth() {
-        Unit testUnit = new Healer(0, 0);
+        Unit testUnit = new Healer(0, 0, 3);
         testUnit.changeHealth(1);
         testUnit.changeHealth(-testUnit.initialHealth());
         assertEquals(true, testUnit.isDead());

@@ -14,28 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units.Enemies;
-
-import java.awt.Point;
-import org.junit.Test;
-import static org.junit.Assert.*;
+package gui;
 
 /**
- * Unit tests for the Enemy class.
+ * Enum which defines a constant for each possible initial board state.
  *
  * @author Nick Houser
  */
-public class EnemyTest {
-
-    /**
-     * Test of Constructor method, of class Enemy.
-     */
-    @Test
-    public void Constructor_ShouldSetPositionEqualToPassedPosition() {
-        int x = 3;
-        int y = 200;
-        Burrower testEnemy = new Burrower(x, y, new Point(1, 1), 1);
-        assertEquals(x, testEnemy.getPosition().x);
-        assertEquals(y, testEnemy.getPosition().y);
-    }
+public enum InitialState {
+    EMPTY,
+    INTEGRATIONTEST,
+    LEVEL_1,
+    LEVEL_2,
+    LEVEL_3,
+    LEVEL_4,
+    LEVEL_5
 }

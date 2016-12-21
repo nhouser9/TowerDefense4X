@@ -38,9 +38,10 @@ public abstract class Enemy extends Unit {
      *
      * @param xPosition the x position where the Enemy should be created
      * @param yPosition the y position where the Enemy should be created
+     * @param squareSize the size of one board square
      */
-    public Enemy(int xPosition, int yPosition) {
-        super();
+    public Enemy(int xPosition, int yPosition, int squareSize) {
+        super(squareSize);
         position = new DoublePoint(xPosition, yPosition);
     }
 
@@ -52,17 +53,5 @@ public abstract class Enemy extends Unit {
     @Override
     public Point getPosition() {
         return position.toPoint();
-    }
-
-    /**
-     * Gets the current position of the unit on the grid.
-     *
-     * @return the position of the unit on the grid as a Point object
-     */
-    @Override
-    public Point getGridPosition() {
-        int gridX = Math.floorDiv(getPosition().x, GameBoardPanel.SQUARE_SIZE);
-        int gridY = Math.floorDiv(getPosition().y, GameBoardPanel.SQUARE_SIZE);
-        return new Point(gridX, gridY);
     }
 }

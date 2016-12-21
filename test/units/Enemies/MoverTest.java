@@ -49,7 +49,7 @@ public class MoverTest {
         when(fakeBoard.search()).thenReturn(fakeSearch);
         when(fakeSearch.towerAtPosition(any())).thenReturn(null);
 
-        Mover mover = new Burrower(initialX, initialY, target);
+        Mover mover = new Burrower(initialX, initialY, target, 1);
         DirectionVector moveDirection = new DirectionVector(mover.getPosition(), target, mover.getScaledSpeed());
         Tower success = mover.move(fakeBoard);
 
@@ -68,13 +68,13 @@ public class MoverTest {
         int directionX = 1;
         int directionY = 2;
 
-        Terrain blocker = new Terrain(0, 0);
+        Terrain blocker = new Terrain(0, 0, 1);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
         when(fakeSearch.towerAtPosition(any(Point.class))).thenReturn(blocker);
 
-        Mover mover = new Burrower(initialX, initialY, new Point(initialX + directionX, initialY + directionY));
+        Mover mover = new Burrower(initialX, initialY, new Point(initialX + directionX, initialY + directionY), 1);
         Tower success = mover.move(fakeBoard);
 
         assertEquals(mover.position.x, initialX, .01);
@@ -90,9 +90,9 @@ public class MoverTest {
         int initialX = 5;
         int initialY = 5;
 
-        Mover mover = new Burrower(initialX, initialY, new Point(initialX, initialY + 1));
+        Mover mover = new Burrower(initialX, initialY, new Point(initialX, initialY + 1), 2);
 
-        Terrain blocker = new Terrain(0, 0);
+        Terrain blocker = new Terrain(0, 0, 2);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
@@ -112,7 +112,7 @@ public class MoverTest {
      */
     @Test
     public void Move_ShouldDestroyTheMover_WhenMovingOffTheBoard() {
-        Mover mover = new Burrower(0, 0, new Point(-1, -1));
+        Mover mover = new Burrower(0, 0, new Point(-1, -1), 1);
 
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);

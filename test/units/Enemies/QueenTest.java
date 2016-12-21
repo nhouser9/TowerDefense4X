@@ -44,9 +44,9 @@ public class QueenTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
 
-        Queen testQueen = spy(new Queen(0, 0, new Point(1, 1)));
+        Queen testQueen = spy(new Queen(0, 0, new Point(1, 1), 1));
 
         testQueen.tick(fakeBoard);
 
@@ -61,9 +61,9 @@ public class QueenTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
 
-        Queen testQueen = spy(new Queen(0, 0, new Point(1, 1)));
+        Queen testQueen = spy(new Queen(0, 0, new Point(1, 1), 1));
 
         for (int tick = 0; tick < Queen.HIVE_DELAY - 1; tick++) {
             testQueen.tick(fakeBoard);

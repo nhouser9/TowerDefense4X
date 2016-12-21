@@ -44,12 +44,12 @@ public class GameBoardPanelTest {
      */
     @Test
     public void Tick_ShouldTickAllTowers_AfterTowersPassedToAddUnit() {
-        Unit fakeUnit1 = Mockito.mock(Tower.class);
+        Tower fakeUnit1 = Mockito.mock(Tower.class);
         Mockito.when(fakeUnit1.getGridPosition()).thenReturn(new Point(1, 1));
-        Unit fakeUnit2 = Mockito.mock(Tower.class);
+        Tower fakeUnit2 = Mockito.mock(Tower.class);
         Mockito.when(fakeUnit2.getGridPosition()).thenReturn(new Point(2, 2));
 
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(fakeUnit1);
         board.addUnit(fakeUnit2);
 
@@ -63,13 +63,13 @@ public class GameBoardPanelTest {
      */
     @Test
     public void PaintComponent_ShouldDrawAllTowers_AfterTowersPassedToAddUnit() {
-        Unit fakeUnit1 = Mockito.mock(Tower.class);
+        Tower fakeUnit1 = Mockito.mock(Tower.class);
         Mockito.when(fakeUnit1.getGridPosition()).thenReturn(new Point(3, 2));
-        Unit fakeUnit2 = Mockito.mock(Tower.class);
+        Tower fakeUnit2 = Mockito.mock(Tower.class);
         Mockito.when(fakeUnit2.getGridPosition()).thenReturn(new Point(5, 4));
         Graphics fakeGraphics = Mockito.mock(Graphics.class);
 
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(fakeUnit1);
         board.addUnit(fakeUnit2);
 
@@ -85,7 +85,7 @@ public class GameBoardPanelTest {
     public void PaintComponent_ShouldDrawLayeredGraphics_AfterLayeredGraphicsUnitAdded() {
         Generator layeredGraphicsTower = mock(Generator.class);
         when(layeredGraphicsTower.getGridPosition()).thenReturn(new Point(0, 0));
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(layeredGraphicsTower);
 
         Graphics fakeGraphics = Mockito.mock(Graphics.class);
@@ -101,7 +101,7 @@ public class GameBoardPanelTest {
         Unit fakeUnit1 = Mockito.mock(Enemy.class);
         Unit fakeUnit2 = Mockito.mock(Enemy.class);
 
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(fakeUnit1);
         board.addUnit(fakeUnit2);
 
@@ -119,7 +119,7 @@ public class GameBoardPanelTest {
         Unit fakeUnit2 = Mockito.mock(Enemy.class);
         Graphics fakeGraphics = Mockito.mock(Graphics.class);
 
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         board.addUnit(fakeUnit1);
         board.addUnit(fakeUnit2);
 
@@ -133,9 +133,9 @@ public class GameBoardPanelTest {
      */
     @Test
     public void Tick_ShouldRemoveDeadEnemies() {
-        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Enemy toRemove = new Burrower(0, 0, new Point(1, 1));
+        Enemy toRemove = new Burrower(0, 0, new Point(1, 1), board.getSquareSize());
         board.addUnit(toRemove);
         toRemove.destroy();
         board.tick();
@@ -149,14 +149,14 @@ public class GameBoardPanelTest {
      */
     @Test
     public void Tick_ShouldRemoveDeadTowers() {
-        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Tower toRemove = new Terrain(0, 0);
+        Tower toRemove = new Terrain(0, 0, board.getSquareSize());
         board.addUnit(toRemove);
         toRemove.destroy();
         board.tick();
-        for (int x = 0; x < GameBoardPanel.NUM_SQUARES; x++) {
-            for (int y = 0; y < GameBoardPanel.NUM_SQUARES; y++) {
+        for (int x = 0; x < testBoardState.getNumSquares(); x++) {
+            for (int y = 0; y < testBoardState.getNumSquares(); y++) {
                 if (testBoardState.towers[x][y] != null) {
                     fail("The unit was not removed after taking more than its max health in damage.");
                 }
@@ -169,10 +169,10 @@ public class GameBoardPanelTest {
      */
     @Test
     public void AddUnit_ShouldNotAddATower_IfAnEnemyExistsAtThatPosition() {
-        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Enemy testEnemy = new Burrower(0, 0, new Point(0, 0));
-        Tower testTower = new Blocker(0, 0);
+        Enemy testEnemy = new Burrower(0, 0, new Point(0, 0), board.getSquareSize());
+        Tower testTower = new Blocker(0, 0, board.getSquareSize());
 
         board.addUnit(testEnemy);
         board.addUnit(testTower);

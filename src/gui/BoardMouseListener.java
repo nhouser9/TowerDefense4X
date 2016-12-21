@@ -61,16 +61,16 @@ public class BoardMouseListener implements MouseListener {
             TowerType selection = buyMenu.selection();
             switch(selection) {
                 case BLOCKER:
-                    gameBoard.addUnit(new Blocker(e.getX(), e.getY()));
+                    gameBoard.addUnit(new Blocker(e.getX(), e.getY(), gameBoard.getSquareSize()));
                     break;
                 case GENERATOR:
-                    gameBoard.addUnit(new Generator(e.getX(), e.getY()));
+                    gameBoard.addUnit(new Generator(e.getX(), e.getY(), gameBoard.getSquareSize()));
                     break;
                 case SHOOTER:
-                    gameBoard.addUnit(new Shooter(e.getX(), e.getY()));
+                    gameBoard.addUnit(new Shooter(e.getX(), e.getY(), gameBoard.getSquareSize()));
                     break;
                 case HEALER:
-                    gameBoard.addUnit(new Healer(e.getX(), e.getY()));
+                    gameBoard.addUnit(new Healer(e.getX(), e.getY(), gameBoard.getSquareSize()));
                     break;
             }
         }catch (Exception noSelection) {

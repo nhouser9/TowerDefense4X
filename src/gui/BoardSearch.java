@@ -53,8 +53,8 @@ public class BoardSearch {
      * board
      */
     public Tower towerAtPosition(Point position) throws ArrayIndexOutOfBoundsException {
-        int gridX = Math.floorDiv(position.x, GameBoardPanel.SQUARE_SIZE);
-        int gridY = Math.floorDiv(position.y, GameBoardPanel.SQUARE_SIZE);
+        int gridX = Math.floorDiv(position.x, boardState.getSquareSize());
+        int gridY = Math.floorDiv(position.y, boardState.getSquareSize());
         return towerAtGridPosition(new Point(gridX, gridY));
     }
 
@@ -119,8 +119,8 @@ public class BoardSearch {
                 continue;
             }
 
-            int gridX = enemy.getGridPosition().x;
-            int gridY = enemy.getGridPosition().y;
+            int gridX = Math.floorDiv(enemy.getPosition().x, boardState.getSquareSize());
+            int gridY = Math.floorDiv(enemy.getPosition().y, boardState.getSquareSize());
             if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
                 return enemy;
             }
@@ -138,26 +138,14 @@ public class BoardSearch {
     }
 
     /**
-     * Method which returns all Enemies from the specified area. Does not find
-     * Hives, because they should not be target by Towers.
-     *
-     * @param topLeft the top left grid square of the search area
-     * @param bottomRight the bottom right grid square of the search area
-     * @return a LinkedList of all Enemies within the specified area
+     * Helper method which converts an absolute position to a grid position.
+     * 
+     * @param absolute the absolute position
+     * @return the equivalent grid position
      */
-    public LinkedList<Enemy> allEnemiesInArea(Point topLeft, Point bottomRight) {
-        LinkedList<Enemy> toReturn = new LinkedList<>();
-        for (Enemy enemy : boardState.enemies) {
-            if (enemy instanceof Hive) {
-                continue;
-            }
-
-            int gridX = enemy.getGridPosition().x;
-            int gridY = enemy.getGridPosition().y;
-            if (gridX >= topLeft.x && gridX <= bottomRight.x && gridY >= topLeft.y && gridY <= bottomRight.y) {
-                toReturn.add(enemy);
-            }
-        }
-        return toReturn;
+    public Point absoluteToGridPosition(Point absolute) {
+        int gridX = Math.floorDiv(absolute.x, boardState.getSquareSize());
+        int gridY = Math.floorDiv(absolute.y, boardState.getSquareSize());
+        return new Point(gridX, gridY);
     }
 }

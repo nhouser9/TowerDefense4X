@@ -39,9 +39,10 @@ public abstract class Mover extends Enemy {
      * @param xPosition the x position where the Mover should be created
      * @param yPosition the y position where the Mover should be created
      * @param target the point the Mover should travel towards
+     * @param squareSize the size of one grid square on the board
      */
-    public Mover(int xPosition, int yPosition, Point target) {
-        super(xPosition, yPosition);
+    public Mover(int xPosition, int yPosition, Point target, int squareSize) {
+        super(xPosition, yPosition, squareSize);
         direction = new DirectionVector(getPosition(), target, getScaledSpeed());
     }
 
@@ -91,7 +92,7 @@ public abstract class Mover extends Enemy {
      * @return the Mover's speed scaled in relation to the board size
      */
     protected double getScaledSpeed() {
-        return GameBoardPanel.SQUARE_SIZE / getSpeed();
+        return squareSize / getSpeed();
     }
 
     /**

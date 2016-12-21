@@ -18,14 +18,9 @@ package units.Towers;
 
 import gui.BoardState;
 import gui.GameBoardPanel;
+import gui.InitialState;
 import org.junit.Test;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -41,10 +36,10 @@ public class PoweredTest {
      */
     @Test
     public void Tick_ShouldNotCallPoweredTick_Initially() {
-        BoardState boardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState boardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(boardState);
 
-        Powered testConsumer = spy(new Shooter(0, 0));
+        Powered testConsumer = spy(new Shooter(0, 0, 1));
         board.addUnit(testConsumer);
 
         testConsumer.tick(board);
@@ -57,12 +52,12 @@ public class PoweredTest {
      */
     @Test
     public void Tick_ShouldNotCallPoweredTick_WhenPoweredThenUnPowered() {
-        BoardState boardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState boardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(boardState);
 
-        Powered testConsumer = spy(new Shooter(0, 0));
+        Powered testConsumer = spy(new Shooter(0, 0, 1));
         board.addUnit(testConsumer);
-        testConsumer.power(new Generator(0, 0));
+        testConsumer.power(new Generator(0, 0, 1));
         testConsumer.unPower();
 
         testConsumer.tick(board);
@@ -75,12 +70,12 @@ public class PoweredTest {
      */
     @Test
     public void Tick_ShouldCallPoweredTick_WhenPowered() {
-        BoardState boardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState boardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(boardState);
 
-        Powered testConsumer = spy(new Shooter(0, 0));
+        Powered testConsumer = spy(new Shooter(0, 0, 1));
         board.addUnit(testConsumer);
-        testConsumer.power(new Generator(0, 0));
+        testConsumer.power(new Generator(0, 0, 1));
 
         testConsumer.tick(board);
 

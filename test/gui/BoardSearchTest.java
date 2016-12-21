@@ -22,6 +22,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import units.Enemies.Burrower;
 import units.Enemies.Enemy;
+import units.Enemies.Hive;
 import units.Towers.Blocker;
 import units.Towers.Terrain;
 import units.Towers.Tower;
@@ -38,8 +39,8 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtThatPosition() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-        board.addUnit(new Terrain(100, 100));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        board.addUnit(new Terrain(100, 100, board.getSquareSize()));
         if (board.search().towerAtPosition(new Point(100, 100)) == null) {
             fail("Expected positionOccupied to return true after adding a Tower.");
         }
@@ -50,8 +51,8 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtPosition_ShouldReturnATower_WhenATowerAddedAtAPositionWithinTheSameGridArea() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-        board.addUnit(new Terrain(100, 100));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        board.addUnit(new Terrain(100, 100, board.getSquareSize()));
         if (board.search().towerAtPosition(new Point(105, 109)) == null) {
             fail("Expected positionOccupied to return true after adding a Tower.");
         }
@@ -62,7 +63,7 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtPosition_ShouldReturnNull_WhenNoTowerAddedAtThatPosition() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         if (board.search().towerAtPosition(new Point(100, 100)) != null) {
             fail("Expected positionOccupied to return false after not adding a Tower.");
         }
@@ -73,8 +74,8 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtPosition_ShouldReturnNull_WhenAUnitAddedAtThatPosition() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-        board.addUnit(new Burrower(100, 100, new Point(1, 1)));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        board.addUnit(new Burrower(100, 100, new Point(1, 1), board.getSquareSize()));
         if (board.search().towerAtPosition(new Point(100, 100)) != null) {
             fail("Expected positionOccupied to return false after adding an Enemy.");
         }
@@ -85,7 +86,7 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtPosition_ShouldThrow_WhenPassedOutOfBoundsPosition() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
         try {
             board.search().towerAtPosition(new Point(-100, -100));
             fail("Expected towerAtPosition to throw when passed an out of bounds position.");
@@ -99,7 +100,7 @@ public class BoardSearchTest {
      */
     @Test
     public void TowerAtGridPosition_ShouldThrow_WhenPassedInvalidIndeces() {
-        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
         try {
             board.search().towerAtGridPosition(new Point(-1, -1));
@@ -113,14 +114,29 @@ public class BoardSearchTest {
      */
     @Test
     public void AddUnit_ShouldNotAddATower_IfAnEnemyExistsAtThatPosition() {
-        BoardState testBoardState = new BoardState(BoardState.InitialState.EMPTY);
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Enemy testEnemy = new Burrower(0, 0, new Point(0, 0));
-        Tower testTower = new Blocker(0, 0);
+        Enemy testEnemy = new Burrower(0, 0, new Point(0, 0), board.getSquareSize());
+        Tower testTower = new Blocker(0, 0, board.getSquareSize());
 
         board.addUnit(testEnemy);
         board.addUnit(testTower);
 
         Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+    }
+
+    /**
+     * Test of firstEnemyInArea method, of class BoardSearch.
+     */
+    @Test
+    public void FirstEnemyInArea_ShouldNotFindHives() {
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
+        GameBoardPanel board = new GameBoardPanel(testBoardState);
+        Enemy testEnemy = new Hive(0, 0, board.getSquareSize());
+
+        board.addUnit(testEnemy);
+
+        Enemy result = board.search().firstEnemyInArea(new Point(0, 0), new Point(5, 5));
+        Assert.assertEquals(result, null);
     }
 }

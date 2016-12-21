@@ -16,26 +16,17 @@
  */
 package units.Towers;
 
-import gui.BoardState;
+import gui.BoardSearch;
 import gui.GameBoardPanel;
-import java.awt.Point;
 import org.junit.Test;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import units.Enemies.Burrower;
 import units.Enemies.Enemy;
 import units.Enemies.Hive;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -50,14 +41,13 @@ public class ShooterTest {
      */
     @Test
     public void PoweredTick_DamagesANearbyEnemy_WhenOneExists() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-
-        Shooter instance = new Shooter(0, 0);
-        board.addUnit(instance);
-
+        GameBoardPanel board = mock(GameBoardPanel.class);
+        BoardSearch search = mock(BoardSearch.class);
+        when(board.search()).thenReturn(search);
         Enemy target = mock(Burrower.class);
-        when(target.getGridPosition()).thenReturn(new Point(1, 1));
-        board.addUnit(target);
+        when(search.firstEnemyInArea(any(), any())).thenReturn(target);
+
+        Shooter instance = new Shooter(0, 0, 1);
 
         instance.poweredTick(board);
         verify(target).changeHealth(any(int.class));
@@ -67,54 +57,17 @@ public class ShooterTest {
      * Test of poweredTick method, of class Shooter.
      */
     @Test
-    public void PoweredTick_DoesNotDamageAnEnemy_WhenNoneAreInRange() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-
-        Shooter instance = new Shooter(0, 0);
-        board.addUnit(instance);
-
-        Enemy target = mock(Burrower.class);
-        when(target.getGridPosition()).thenReturn(new Point(GameBoardPanel.NUM_SQUARES - 1, 1));
-        board.addUnit(target);
-
-        instance.poweredTick(board);
-        verify(target, times(0)).changeHealth(any(int.class));
-    }
-
-    /**
-     * Test of poweredTick method, of class Shooter.
-     */
-    @Test
     public void PoweredTick_WaitsBeforeDamagaingAnEnemyAgain_AfterDamagingAnEnemy() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-
-        Shooter instance = new Shooter(0, 0);
-        board.addUnit(instance);
-
+        GameBoardPanel board = mock(GameBoardPanel.class);
+        BoardSearch search = mock(BoardSearch.class);
+        when(board.search()).thenReturn(search);
         Enemy target = mock(Burrower.class);
-        when(target.getGridPosition()).thenReturn(new Point(1, 1));
-        board.addUnit(target);
+        when(search.firstEnemyInArea(any(), any())).thenReturn(target);
+
+        Shooter instance = new Shooter(0, 0, 1);
 
         instance.poweredTick(board);
         instance.poweredTick(board);
         verify(target, times(1)).changeHealth(any(int.class));
-    }
-
-    /**
-     * Test of poweredTick method, of class Shooter.
-     */
-    @Test
-    public void PoweredTick_WillNotFireOnHives() {
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.EMPTY));
-
-        Shooter instance = new Shooter(0, 0);
-        board.addUnit(instance);
-
-        Enemy target = mock(Hive.class);
-        when(target.getGridPosition()).thenReturn(new Point(2, 1));
-        board.addUnit(target);
-
-        instance.poweredTick(board);
-        verify(target, times(0)).changeHealth(any(int.class));
     }
 }

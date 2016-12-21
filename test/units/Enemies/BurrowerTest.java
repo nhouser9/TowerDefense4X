@@ -47,9 +47,9 @@ public class BurrowerTest {
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
         BoardSearch fakeSearch = mock(BoardSearch.class);
         when(fakeBoard.search()).thenReturn(fakeSearch);
-        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0));
+        when(fakeSearch.towerAtPosition(any())).thenReturn(new Terrain(0, 0, 1));
 
-        Burrower testBurrower = spy(new Burrower(0, 0, new Point(1, 1)));
+        Burrower testBurrower = spy(new Burrower(0, 0, new Point(1, 1), 1));
 
         testBurrower.tick(fakeBoard);
 
@@ -67,7 +67,7 @@ public class BurrowerTest {
         Tower fakeBlocker = mock(Terrain.class);
         when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
 
-        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
+        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1), 1);
 
         testBurrower.tick(fakeBoard);
 
@@ -91,7 +91,7 @@ public class BurrowerTest {
         Point target = new Point(1000, 300);
         DirectionVector toTargetBeforeTick = new DirectionVector(source, target, speed);
 
-        Burrower testBurrower = new Burrower(initialX, initialY, target);
+        Burrower testBurrower = new Burrower(initialX, initialY, target, 1);
         for (int ticks = 0; ticks < 100; ticks++) {
             testBurrower.tick(fakeBoard);
         }
@@ -113,7 +113,7 @@ public class BurrowerTest {
         when(fakeBlocker.isDead()).thenReturn(true);
         when(fakeSearch.towerAtPosition(any())).thenReturn(fakeBlocker);
 
-        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1));
+        Burrower testBurrower = new Burrower(5, 5, new Point(1, 1), 1);
 
         testBurrower.tick(fakeBoard);
 

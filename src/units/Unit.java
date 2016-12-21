@@ -31,12 +31,18 @@ public abstract class Unit {
 
     //the health of the unit
     private int health;
+    
+    //the size of one grid square on the board
+    protected int squareSize;
 
     /**
      * Constructor which initializes health.
+     *
+     * @param squareSize the size of one grid square on the board
      */
-    public Unit() {
+    public Unit(int squareSize) {
         health = initialHealth();
+        this.squareSize = squareSize;
     }
 
     /**
@@ -93,7 +99,7 @@ public abstract class Unit {
      * @return the Unit's size scaled in relation to the board size
      */
     public int getScaledSize() {
-        return Math.max(Math.floorDiv(GameBoardPanel.SQUARE_SIZE, getSize()), 1);
+        return Math.max(Math.floorDiv(squareSize, getSize()), 1);
     }
 
     /**
@@ -119,14 +125,6 @@ public abstract class Unit {
      * @return the position of the unit as a Point object
      */
     public abstract Point getPosition();
-
-    /**
-     * Gets the current position of the unit in terms of its location on the
-     * grid imposed on the board.
-     *
-     * @return the position of the unit on the grid as a Point object
-     */
-    public abstract Point getGridPosition();
 
     /**
      * Method which defines what action the unit will take during gameplay. This

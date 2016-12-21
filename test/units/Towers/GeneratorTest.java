@@ -17,7 +17,7 @@
 package units.Towers;
 
 import gui.BoardState;
-import gui.BoardState.InitialState;
+import gui.InitialState;
 import gui.GameBoardPanel;
 import org.junit.Test;
 import static org.mockito.Mockito.never;
@@ -42,11 +42,11 @@ public class GeneratorTest {
      */
     @Test
     public void PoweredTick_PowersNearbyUnpoweredUnits() {
-        Generator testGenerator = new Generator(0, 0);
-        Powered testPowered = spy(new Shooter(GameBoardPanel.SQUARE_SIZE, 0));
+        Generator testGenerator = new Generator(0, 0, 1);
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        Powered testPowered = spy(new Shooter(board.getSquareSize(), 0, board.getSquareSize()));
 
-        testGenerator.power(new Generator(0, 0));
+        testGenerator.power(new Generator(0, 0, board.getSquareSize()));
         board.addUnit(testGenerator);
         board.addUnit(testPowered);
 
@@ -61,10 +61,10 @@ public class GeneratorTest {
      */
     @Test
     public void PoweredTick_ShouldNotPowerSelf() {
-        Generator testGenerator = spy(new Generator(0, 0));
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        Generator testGenerator = spy(new Generator(0, 0, board.getSquareSize()));
 
-        testGenerator.power(new Generator(0, 0));
+        testGenerator.power(new Generator(0, 0, board.getSquareSize()));
         board.addUnit(testGenerator);
 
         testGenerator.poweredTick(board);
@@ -77,10 +77,10 @@ public class GeneratorTest {
      */
     @Test
     public void PoweredTick_ShouldCallUnpower_WhenGeneratorIsDead() {
-        Generator testGenerator = spy(new Generator(0, 0));
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        Generator testGenerator = spy(new Generator(0, 0, board.getSquareSize()));
 
-        testGenerator.power(new Generator(0, 0));
+        testGenerator.power(new Generator(0, 0, board.getSquareSize()));
         board.addUnit(testGenerator);
 
         testGenerator.destroy();
@@ -94,11 +94,11 @@ public class GeneratorTest {
      */
     @Test
     public void UnPower_ShouldAlsoUnpowerUnitsPoweredByThisUnit() {
-        Generator testGenerator = new Generator(0, 0);
-        Powered testPowered = spy(new Shooter(GameBoardPanel.SQUARE_SIZE, 0));
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
+        Generator testGenerator = new Generator(0, 0, board.getSquareSize());
+        Powered testPowered = spy(new Shooter(board.getSquareSize(), 0, board.getSquareSize()));
 
-        testGenerator.power(new Generator(0, 0));
+        testGenerator.power(new Generator(0, 0, board.getSquareSize()));
         board.addUnit(testGenerator);
         board.addUnit(testPowered);
 

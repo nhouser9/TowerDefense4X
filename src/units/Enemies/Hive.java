@@ -48,9 +48,10 @@ public class Hive extends Enemy {
      *
      * @param xPosition the x position where the Enemy should be created
      * @param yPosition the y position where the Enemy should be created
+     * @param squareSize the size of one board square
      */
-    public Hive(int xPosition, int yPosition) {
-        super(xPosition - (xPosition % GameBoardPanel.SQUARE_SIZE), yPosition - (yPosition % GameBoardPanel.SQUARE_SIZE));
+    public Hive(int xPosition, int yPosition, int squareSize) {
+        super(xPosition - (xPosition % squareSize), yPosition - (yPosition % squareSize), squareSize);
         lifetime = 0;
         rng = new Random(System.currentTimeMillis());
     }
@@ -107,7 +108,7 @@ public class Hive extends Enemy {
             int yTarget = rng.nextInt();
             int xTarget = rng.nextInt();
             Point target = new Point(xTarget, yTarget);
-            board.addUnit(new Burrower(getCenterPosition().x, getCenterPosition().y, target));
+            board.addUnit(new Burrower(getCenterPosition().x, getCenterPosition().y, target, squareSize));
         }
     }
 
@@ -121,7 +122,7 @@ public class Hive extends Enemy {
             int yTarget = rng.nextInt();
             int xTarget = rng.nextInt();
             Point target = new Point(xTarget, yTarget);
-            board.addUnit(new Queen(getCenterPosition().x, getCenterPosition().y, target));
+            board.addUnit(new Queen(getCenterPosition().x, getCenterPosition().y, target, squareSize));
         }
     }
 

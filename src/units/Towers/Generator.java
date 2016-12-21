@@ -44,9 +44,10 @@ public class Generator extends Powered {
      * Generator
      * @param yPosition the y position where the user wants to create the
      * Generator
+     * @param squareSize the size of one grid square on the board
      */
-    public Generator(int xPosition, int yPosition) {
-        super(xPosition, yPosition);
+    public Generator(int xPosition, int yPosition, int squareSize) {
+        super(xPosition, yPosition, squareSize);
         powering = new LinkedList<>();
     }
 

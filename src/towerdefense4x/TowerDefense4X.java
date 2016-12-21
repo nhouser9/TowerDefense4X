@@ -20,6 +20,7 @@ import gui.BoardMouseListener;
 import gui.BoardState;
 import gui.GameBoardPanel;
 import gui.GuiPanel;
+import gui.InitialState;
 import gui.PurchasePanel;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -49,7 +50,7 @@ public class TowerDefense4X {
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         GuiPanel gui = new GuiPanel();
-        GameBoardPanel board = new GameBoardPanel(new BoardState(BoardState.InitialState.INTEGRATIONTEST));
+        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.INTEGRATIONTEST));
         PurchasePanel buy = new PurchasePanel();
         
         board.addMouseListener(new BoardMouseListener(buy, board));

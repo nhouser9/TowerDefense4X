@@ -43,9 +43,10 @@ public class Queen extends Mover {
      * @param xPosition the x position where the Burrower should be created
      * @param yPosition the y position where the Burrower should be created
      * @param target the point the Burrower should travel towards
+     * @param squareSize the size of one grid square on the board
      */
-    public Queen(int xPosition, int yPosition, Point target) {
-        super(xPosition, yPosition, target);
+    public Queen(int xPosition, int yPosition, Point target, int squareSize) {
+        super(xPosition, yPosition, target, squareSize);
         lifetime = 0;
     }
 
@@ -90,7 +91,7 @@ public class Queen extends Mover {
         move(board);
         lifetime = lifetime + 1;
         if (lifetime >= HIVE_DELAY) {
-            board.addUnit(new Hive(getPosition().x, getPosition().y));
+            board.addUnit(new Hive(getPosition().x, getPosition().y, squareSize));
             destroy();
         }
     }

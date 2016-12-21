@@ -41,9 +41,10 @@ public class Healer extends Powered implements ILayeredGraphics {
      *
      * @param xPosition the x position where the user wants to create the Healer
      * @param yPosition the y position where the user wants to create the Healer
+     * @param squareSize the size of one grid square on the board
      */
-    public Healer(int xPosition, int yPosition) {
-        super(xPosition, yPosition);
+    public Healer(int xPosition, int yPosition, int squareSize) {
+        super(xPosition, yPosition, squareSize);
         lastTarget = null;
     }
 

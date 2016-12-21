@@ -52,9 +52,10 @@ public class Shooter extends Powered {
      * Shooter
      * @param yPosition the y position where the user wants to create the
      * Shooter
+     * @param squareSize the size of one grid square on the board
      */
-    public Shooter(int xPosition, int yPosition) {
-        super(xPosition, yPosition);
+    public Shooter(int xPosition, int yPosition, int squareSize) {
+        super(xPosition, yPosition, squareSize);
         firingCooldown = FIRING_DELAY;
         lastTarget = null;
     }

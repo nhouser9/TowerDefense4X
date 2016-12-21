@@ -32,9 +32,10 @@ public class TowerTest {
      */
     @Test
     public void Constructor_ShouldRoundPosition_WhenArgsNotDivisibleBySquareSize() {
-        int xGridAlignment = GameBoardPanel.SQUARE_SIZE * 2;
-        int yGridAlignment = GameBoardPanel.SQUARE_SIZE * 4;
-        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + GameBoardPanel.SQUARE_SIZE - 2);
+        int fakeSquareSize = 6;
+        int xGridAlignment = fakeSquareSize * 2;
+        int yGridAlignment = fakeSquareSize * 4;
+        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + fakeSquareSize - 2, fakeSquareSize);
         assertEquals(test.getPosition().x, xGridAlignment);
         assertEquals(test.getPosition().y, yGridAlignment);
     }

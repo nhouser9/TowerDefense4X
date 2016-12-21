@@ -49,7 +49,7 @@ public class HealerTest {
         when(fakeSearch.allTowersInArea(any(), any())).thenReturn(searchResults);
         when(fakeDamaged.isDamaged()).thenReturn(true);
         
-        Healer testHealer = new Healer(0, 0);
+        Healer testHealer = new Healer(0, 0, 1);
         testHealer.poweredTick(fakeBoard);
         
         verify(fakeDamaged).changeHealth(1);
@@ -70,7 +70,7 @@ public class HealerTest {
         when(fakeSearch.allTowersInArea(any(), any())).thenReturn(searchResults);
         when(fakeDamaged.isDamaged()).thenReturn(false);
         
-        Healer testHealer = new Healer(0, 0);
+        Healer testHealer = new Healer(0, 0, 1);
         testHealer.poweredTick(fakeBoard);
         
         verify(fakeDamaged, never()).changeHealth(1);
@@ -94,7 +94,7 @@ public class HealerTest {
         when(fakeDamaged.isDamaged()).thenReturn(true);
         when(fakeDamaged2.isDamaged()).thenReturn(true);
         
-        Healer testHealer = new Healer(0, 0);
+        Healer testHealer = new Healer(0, 0, 1);
         testHealer.poweredTick(fakeBoard);
         
         verify(fakeDamaged).changeHealth(1);
@@ -108,7 +108,7 @@ public class HealerTest {
     public void PoweredTick_ShouldNotHealSelf() {
         BoardSearch fakeSearch = mock(BoardSearch.class);
         GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
-        Healer testHealer = spy(new Healer(0, 0));
+        Healer testHealer = spy(new Healer(0, 0, 1));
         
         when(fakeBoard.search()).thenReturn(fakeSearch);
         LinkedList<Tower> searchResults = new LinkedList<>();
@@ -135,7 +135,7 @@ public class HealerTest {
         when(fakeSearch.allTowersInArea(any(), any())).thenReturn(searchResults);
         when(fakeDamaged.isDamaged()).thenReturn(true);
         
-        Healer testHealer = new Healer(0, 0);
+        Healer testHealer = new Healer(0, 0, 1);
         testHealer.poweredTick(fakeBoard);
         
         verify(fakeDamaged, never()).changeHealth(1);

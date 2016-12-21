@@ -23,7 +23,6 @@ import java.awt.Point;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 import units.Enemies.Enemy;
-import units.Enemies.Hive;
 import units.ILayeredGraphics;
 import units.Towers.Tower;
 import units.Unit;
@@ -36,19 +35,9 @@ import units.Unit;
 public class GameBoardPanel extends JPanel {
 
     /**
-     * Constant which defines how big each square on the board will be.
+     * Constant representing the size of the board.
      */
-    public static final int SQUARE_SIZE = 20;
-
-    /*
-     * Constant which defines how many squares are in the board.
-     */
-    public static final int NUM_SQUARES = 45;
-
-    /*
-     * Constant which defines how big the panel is as a whole.
-     */
-    public static final int SIZE = SQUARE_SIZE * NUM_SQUARES;
+    public static final int SIZE = 900;
 
     //variable which tracks which units are currently on the board
     private BoardState boardState;
@@ -63,9 +52,18 @@ public class GameBoardPanel extends JPanel {
      * @param intitialState the intial board state to use for setting up
      */
     public GameBoardPanel(BoardState intitialState) {
-        setPreferredSize(new Dimension(SIZE, SIZE));
         boardState = intitialState;
         boardSearch = new BoardSearch(boardState);
+        setPreferredSize(new Dimension(SIZE, SIZE));
+    }
+
+    /**
+     * Method which exposes the square size of the current board state.
+     *
+     * @return the draw size of one grid square
+     */
+    public int getSquareSize() {
+        return boardState.getSquareSize();
     }
 
     /**
@@ -75,14 +73,16 @@ public class GameBoardPanel extends JPanel {
      */
     public void addUnit(Unit toAdd) {
         if (toAdd instanceof Tower) {
+            Tower addTower = (Tower) toAdd;
+            
             for (Enemy enemy : boardState.enemies) {
-                if (enemy.getGridPosition().equals(toAdd.getGridPosition())) {
+                Point enemyGridPosition = boardSearch.absoluteToGridPosition(enemy.getPosition());
+                if (enemyGridPosition.equals(addTower.getGridPosition())) {
                     return;
                 }
             }
 
-            Tower addTower = (Tower) toAdd;
-            boardState.towers[toAdd.getGridPosition().x][toAdd.getGridPosition().y] = addTower;
+            boardState.towers[addTower.getGridPosition().x][addTower.getGridPosition().y] = addTower;
         } else if (toAdd instanceof Enemy) {
             boardState.enemies.add((Enemy) toAdd);
         } else {
@@ -113,8 +113,8 @@ public class GameBoardPanel extends JPanel {
             }
         }
 
-        for (int x = 0; x < NUM_SQUARES; x++) {
-            for (int y = 0; y < NUM_SQUARES; y++) {
+        for (int x = 0; x < boardState.getNumSquares(); x++) {
+            for (int y = 0; y < boardState.getNumSquares(); y++) {
                 Tower current = boardState.towers[x][y];
                 if (current != null) {
                     current.tick(this);
@@ -169,8 +169,8 @@ public class GameBoardPanel extends JPanel {
      * @param g the Graphics object to draw on
      */
     private void drawTowers(Graphics g) {
-        for (int x = 0; x < NUM_SQUARES; x++) {
-            for (int y = 0; y < NUM_SQUARES; y++) {
+        for (int x = 0; x < boardState.getNumSquares(); x++) {
+            for (int y = 0; y < boardState.getNumSquares(); y++) {
                 if (boardState.towers[x][y] != null) {
                     boardState.towers[x][y].drawSelf(g);
                 }
@@ -197,8 +197,8 @@ public class GameBoardPanel extends JPanel {
      * @param g the Graphics object to draw on
      */
     private void drawTowerLayers(Graphics g) {
-        for (int x = 0; x < NUM_SQUARES; x++) {
-            for (int y = 0; y < NUM_SQUARES; y++) {
+        for (int x = 0; x < boardState.getNumSquares(); x++) {
+            for (int y = 0; y < boardState.getNumSquares(); y++) {
                 Tower currentTower = boardState.towers[x][y];
                 if (currentTower != null && currentTower instanceof ILayeredGraphics) {
                     ((ILayeredGraphics) currentTower).drawLayer(g);

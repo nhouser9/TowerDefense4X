@@ -33,9 +33,10 @@ public class Terrain extends Inactive {
      *
      * @param xPosition the x position where the user wants to create the Terrain
      * @param yPosition the y position where the user wants to create the Terrain
+     * @param squareSize the size of one grid square on the board
      */
-    public Terrain(int xPosition, int yPosition) {
-        super(xPosition, yPosition);
+    public Terrain(int xPosition, int yPosition, int squareSize) {
+        super(xPosition, yPosition, squareSize);
     }
 
     /**

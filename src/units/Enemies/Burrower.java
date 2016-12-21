@@ -37,9 +37,10 @@ public class Burrower extends Mover {
      * @param xPosition the x position where the Burrower should be created
      * @param yPosition the y position where the Burrower should be created
      * @param target the point the Burrower should travel towards
+     * @param squareSize the size of one grid square on the board
      */
-    public Burrower(int xPosition, int yPosition, Point target) {
-        super(xPosition, yPosition, target);
+    public Burrower(int xPosition, int yPosition, Point target, int squareSize) {
+        super(xPosition, yPosition, target, squareSize);
     }
 
     /**
