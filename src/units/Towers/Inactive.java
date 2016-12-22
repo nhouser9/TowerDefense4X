@@ -16,7 +16,7 @@
  */
 package units.Towers;
 
-import gui.GameBoardPanel;
+import gui.Game.GameBoardPanel;
 
 /**
  * Extension of Tower which disables ticking functionality. This is intended for

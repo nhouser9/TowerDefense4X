@@ -16,11 +16,11 @@
  */
 package units.Enemies;
 
-import gui.BoardSearch;
+import gui.Game.BoardSearch;
 import units.Towers.Terrain;
 import units.Towers.Tower;
-import gui.GameBoardPanel;
-import gui.OffscreenException;
+import gui.Game.GameBoardPanel;
+import gui.Game.OffscreenException;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -119,4 +119,34 @@ public class MoverTest {
         assertEquals(mover.position.y, initialY, .01);
         assertEquals(success, blocker);
     }
+
+    /**
+     * Test of move method, of class Enemy.
+     */
+    /*@Test
+    public void Move_ReverseDirection_WhenMoveWouldTravelNorthOfBoard() {
+
+        Mover mover = new Burrower(initialX, initialY, new Point(initialX, initialY - 10), 2);
+        when(fakeBoard.search()).thenReturn(fakeSearch);
+        int initialX = 0;
+        int initialY = 0;
+
+        Terrain blocker = new Terrain(0, 0, 2);
+        GameBoardPanel fakeBoard = mock(GameBoardPanel.class);
+        BoardSearch fakeSearch = mock(BoardSearch.class);
+
+        OffscreenException offscreen = new OffscreenException(false, false, true, false);
+        try {
+            when(fakeSearch.towerAtPosition(new Point(initialX, initialY - 1))).thenThrow(offscreen);
+        } catch (OffscreenException unexpected) {
+            fail("Did not expect offscreen exception.");
+        }
+        
+        mover.move(fakeBoard);
+        double scaledSpeed = mover.getScaledSpeed();
+        mover.move(fakeBoard);
+
+        assertEquals(mover.position.x, initialX, .01);
+        assertEquals(mover.position.y, initialY + mover.getScaledSpeed(), .01);
+    }*/
 }

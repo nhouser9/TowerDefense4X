@@ -16,8 +16,8 @@
  */
 package units.Towers;
 
-import gui.BoardSearch;
-import gui.GameBoardPanel;
+import gui.Game.BoardSearch;
+import gui.Game.GameBoardPanel;
 import org.junit.Test;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;

@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package gui.Game;
 
 import java.util.LinkedList;
+import towerdefense4x.SingletonRandom;
 import units.Enemies.Enemy;
 import units.Enemies.Hive;
 import units.Towers.Generator;
@@ -49,7 +50,7 @@ public class BoardState {
      */
     public BoardState(InitialState state) {
         enemies = new LinkedList<>();
-        
+
         switch (state) {
             case EMPTY:
                 setupEmptyState();
@@ -59,6 +60,27 @@ public class BoardState {
                 break;
             case LEVEL_1:
                 setupLevelOne();
+                break;
+            case LEVEL_2:
+                setupLevelTwo();
+                break;
+            case LEVEL_3:
+                setupLevelThree();
+                break;
+            case LEVEL_4:
+                setupLevelFour();
+                break;
+            case LEVEL_5:
+                setupLevelFive();
+                break;
+            case LEVEL_6:
+                setupLevelSix();
+                break;
+            case LEVEL_7:
+                setupLevelSeven();
+                break;
+            case LEVEL_8:
+                setupLevelEight();
                 break;
             default:
                 throw new Error("Invalid level selection");
@@ -128,6 +150,117 @@ public class BoardState {
     }
 
     /**
+     * Sets up the level two gamestate.
+     */
+    private void setupLevelTwo() {
+        setNumSquares(5);
+
+        fillTerrain();
+
+        addHive(0, 0);
+        addHive(4, 4);
+
+        addBaseGenerator(2, 2);
+    }
+
+    /**
+     * Sets up the level three gamestate.
+     */
+    private void setupLevelThree() {
+        setNumSquares(7);
+
+        fillTerrain();
+
+        addHive(0, 0);
+        addHive(6, 6);
+        addHive(0, 6);
+
+        addBaseGenerator(6, 0);
+    }
+
+    /**
+     * Sets up the level four gamestate.
+     */
+    private void setupLevelFour() {
+        setNumSquares(9);
+
+        fillTerrain();
+
+        addHive(1, 1);
+        addHive(0, 0);
+        addHive(7, 7);
+        addHive(8, 8);
+
+        addBaseGenerator(4, 4);
+    }
+
+    /**
+     * Sets up the level five gamestate.
+     */
+    private void setupLevelFive() {
+        setNumSquares(15);
+
+        fillTerrain();
+
+        for (int xIndex = 3; xIndex < 12; xIndex = xIndex + 2) {
+            addHive(xIndex, 0);
+        }
+
+        addBaseGenerator(7, 14);
+    }
+
+    /**
+     * Sets up the level six gamestate.
+     */
+    private void setupLevelSix() {
+        setNumSquares(15);
+
+        fillTerrain();
+
+        for (int xIndex = 3; xIndex < 12; xIndex = xIndex + 2) {
+            addHive(xIndex, 0);
+        }
+            addHive(1, 13);
+            addHive(13, 13);
+
+        addBaseGenerator(7, 14);
+    }
+
+    /**
+     * Sets up the level six gamestate.
+     */
+    private void setupLevelSeven() {
+        setNumSquares(7);
+
+        fillTerrain();
+
+        for (int numHives = 0; numHives < 5; numHives++) {
+            addHive(3, 3);
+        }
+
+        addBaseGenerator(0, 0);
+        addBaseGenerator(6, 0);
+        addBaseGenerator(0, 6);
+        addBaseGenerator(6, 6);
+    }
+
+    /**
+     * Sets up the level six gamestate.
+     */
+    private void setupLevelEight() {
+        setNumSquares(20);
+
+        fillTerrain();
+
+        for (int index = 2; index < 20; index = index + 5) {
+            addHive(index, index);
+            addHive(19 - index, index);
+        }
+
+        addBaseGenerator(9, 19);
+    }
+
+    /**
      * Method which sets the number of squares on the board. Also initializes
      * the Towers array.
      *
@@ -158,7 +291,7 @@ public class BoardState {
      */
     private void addHive(int gridX, int gridY) {
         towers[gridX][gridY] = null;
-        enemies.add(new Hive(gridX * squareSize, gridY * squareSize, squareSize));
+        enemies.add(new Hive(gridX * squareSize, gridY * squareSize, squareSize, SingletonRandom.getRandom()));
     }
 
     /**

@@ -16,10 +16,11 @@
  */
 package units.Enemies;
 
-import gui.GameBoardPanel;
+import gui.Game.GameBoardPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import towerdefense4x.SingletonRandom;
 
 /**
  * Class representing a monster that wanders around until it has lived for long
@@ -91,7 +92,7 @@ public class Queen extends Mover {
         move(board);
         lifetime = lifetime + 1;
         if (lifetime >= HIVE_DELAY) {
-            board.addUnit(new Hive(getPosition().x, getPosition().y, squareSize));
+            board.addUnit(new Hive(getPosition().x, getPosition().y, squareSize, SingletonRandom.getRandom()));
             destroy();
         }
     }

@@ -17,8 +17,8 @@
 package units.Enemies;
 
 import units.Towers.Tower;
-import gui.GameBoardPanel;
-import gui.OffscreenException;
+import gui.Game.GameBoardPanel;
+import gui.Game.OffscreenException;
 import java.awt.Point;
 import units.DirectionVector;
 import units.DoublePoint;

@@ -14,19 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package towerdefense4x;
+
+import java.util.Random;
 
 /**
- * Enum which defines a constant for each possible initial board state.
+ * Class which generates global random numbers; this prevents each unit that
+ * needs a random number from maintining its own Random(), which can lead to a
+ * loss of true randomness.
  *
  * @author Nick Houser
  */
-public enum InitialState {
-    EMPTY,
-    INTEGRATIONTEST,
-    LEVEL_1,
-    LEVEL_2,
-    LEVEL_3,
-    LEVEL_4,
-    LEVEL_5
+public class SingletonRandom {
+    //field which contains a singleton Random
+
+    private static Random rng = null;
+
+    /**
+     * Method which gets the singleton Random. Initializes it if it is null.
+     *
+     * @return a random integer
+     */
+    public static Random getRandom() {
+        if (rng == null) {
+            rng = new Random(System.currentTimeMillis());
+        }
+        return rng;
+    }
 }

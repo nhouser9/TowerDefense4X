@@ -16,7 +16,6 @@
  */
 package units.Enemies;
 
-import gui.GameBoardPanel;
 import java.awt.Point;
 import units.DoublePoint;
 import units.Unit;

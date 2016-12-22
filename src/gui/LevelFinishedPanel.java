@@ -16,41 +16,32 @@
  */
 package gui;
 
-import java.awt.GridLayout;
+import gui.Game.InitialState;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Extension of JPanel which represents the GUI.
+ * Class representing the pane shown when a level ends.
  *
  * @author Nick Houser
  */
-public class GuiPanel extends JPanel {
+public class LevelFinishedPanel extends JPanel {
 
     /**
-     * Constructor which initializes the GUI, including adding dummy text and
-     * color.
+     * Constructor which initializes subcomponents and arranges them according
+     * to the proper layout.
+     *
+     * @param window the game window to call to reset or return to the main menu
+     * @param won whether the user won or lost the leve
      */
-    public GuiPanel() {
-        setLayout(new GridLayout(0, 1));
+    public LevelFinishedPanel(MainFrame window, boolean won) {
         
-        add(new JLabel("Time Left:"));
-        
-        JLabel timeLabel = new JLabel();
-        add(timeLabel);
-        
-        JButton retry = new JButton("Retry");
-        retry.addActionListener((ActionEvent e) -> {
-            
-        });
-        add(retry);
 
-        JButton mainMenu = new JButton("Menu");
-        mainMenu.addActionListener((ActionEvent e) -> {
-            
+        JButton menuButton = new JButton("Main Menu");
+        menuButton.addActionListener((ActionEvent e) -> {
+            window.showMenu();
         });
-        add(mainMenu);
+        add(menuButton);
     }
 }

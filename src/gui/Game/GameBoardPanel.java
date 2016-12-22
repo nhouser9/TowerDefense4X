@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package gui.Game;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 import units.Enemies.Enemy;
 import units.ILayeredGraphics;
+import units.Towers.Terrain;
 import units.Towers.Tower;
 import units.Unit;
 
@@ -56,7 +57,7 @@ public class GameBoardPanel extends JPanel {
         boardSearch = new BoardSearch(boardState);
         setPreferredSize(new Dimension(SIZE, SIZE));
     }
-    
+
     /**
      * Method which exposes the square size of the current board state.
      *
@@ -74,6 +75,11 @@ public class GameBoardPanel extends JPanel {
     public void addUnit(Unit toAdd) {
         if (toAdd instanceof Tower) {
             Tower addTower = (Tower) toAdd;
+
+            Tower currentOccupant = boardState.towers[addTower.getGridPosition().x][addTower.getGridPosition().y];
+            if (currentOccupant != null && !(currentOccupant instanceof Terrain)) {
+                return;
+            }
             
             for (Enemy enemy : boardState.enemies) {
                 Point enemyGridPosition = boardSearch.absoluteToGridPosition(enemy.getPosition());

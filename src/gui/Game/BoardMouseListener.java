@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package gui.Game;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import javax.swing.event.MouseInputListener;
 import units.Towers.Blocker;
 import units.Towers.Generator;
 import units.Towers.Healer;
@@ -29,7 +31,7 @@ import units.Towers.TowerType;
  *
  * @author Nick Houser
  */
-public class BoardMouseListener implements MouseListener {
+public class BoardMouseListener implements MouseInputListener {
 
     //link to the purchase menu to determine which Tower type to place
     private PurchasePanel buyMenu;
@@ -92,5 +94,32 @@ public class BoardMouseListener implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        try {
+            TowerType selection = buyMenu.selection();
+            switch(selection) {
+                case BLOCKER:
+                    gameBoard.addUnit(new Blocker(e.getX(), e.getY(), gameBoard.getSquareSize()));
+                    break;
+                case GENERATOR:
+                    gameBoard.addUnit(new Generator(e.getX(), e.getY(), gameBoard.getSquareSize()));
+                    break;
+                case SHOOTER:
+                    gameBoard.addUnit(new Shooter(e.getX(), e.getY(), gameBoard.getSquareSize()));
+                    break;
+                case HEALER:
+                    gameBoard.addUnit(new Healer(e.getX(), e.getY(), gameBoard.getSquareSize()));
+                    break;
+            }
+        }catch (Exception noSelection) {
+            //simply don't place a Tower
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
     }
 }

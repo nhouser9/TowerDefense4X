@@ -16,9 +16,10 @@
  */
 package units.Enemies;
 
-import gui.BoardState;
-import gui.GameBoardPanel;
-import gui.InitialState;
+import gui.Game.BoardState;
+import gui.Game.GameBoardPanel;
+import gui.Game.InitialState;
+import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -37,7 +38,7 @@ public class HiveTest {
         int fakeSquareSize = 5;
         int xGridAlignment = fakeSquareSize * 2;
         int yGridAlignment = fakeSquareSize * 4;
-        Hive test = new Hive(xGridAlignment + 2, yGridAlignment + fakeSquareSize - 2, fakeSquareSize);
+        Hive test = new Hive(xGridAlignment + 2, yGridAlignment + fakeSquareSize - 2, fakeSquareSize, new Random());
         assertEquals(test.getPosition().x, xGridAlignment);
         assertEquals(test.getPosition().y, yGridAlignment);
     }
@@ -47,7 +48,7 @@ public class HiveTest {
      */
     @Test
     public void ChangeHealth_ShouldNeverMarkAHiveForDeath() {
-        Hive testHive = new Hive(0, 0, 1);
+        Hive testHive = new Hive(0, 0, 1, new Random());
         testHive.changeHealth(0 - Integer.MAX_VALUE);
         assertEquals(false, testHive.isDead());
     }
@@ -57,7 +58,7 @@ public class HiveTest {
      */
     @Test
     public void Destroy_ShouldNeverMarkAHiveForDeath() {
-        Hive testHive = new Hive(0, 0, 1);
+        Hive testHive = new Hive(0, 0, 1, new Random());
         testHive.destroy();
         assertEquals(false, testHive.isDead());
     }
@@ -67,7 +68,7 @@ public class HiveTest {
      */
     @Test
     public void Tick_ShouldSpawnABurrowerAtTheProperTimes() {
-        Hive testHive = new Hive(0, 0, 1);
+        Hive testHive = new Hive(0, 0, 1, new Random());
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
 
         for (int ticks = 0; ticks < Hive.CADENCE_BURROWER - 1; ticks++) {
@@ -96,7 +97,7 @@ public class HiveTest {
      */
     @Test
     public void Tick_ShouldSpawnAQueenAtTheProperTimes() {
-        Hive testHive = new Hive(0, 0, 1);
+        Hive testHive = new Hive(0, 0, 1, new Random());
         GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.EMPTY));
 
         for (int ticks = 0; ticks < Hive.CADENCE_QUEEN - 1; ticks++) {

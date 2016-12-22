@@ -16,9 +16,9 @@
  */
 package units.Towers;
 
-import gui.BoardState;
-import gui.InitialState;
-import gui.GameBoardPanel;
+import gui.Game.BoardState;
+import gui.Game.InitialState;
+import gui.Game.GameBoardPanel;
 import org.junit.Test;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;

@@ -16,7 +16,7 @@
  */
 package units.Enemies;
 
-import gui.GameBoardPanel;
+import gui.Game.GameBoardPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -50,10 +50,10 @@ public class Hive extends Enemy {
      * @param yPosition the y position where the Enemy should be created
      * @param squareSize the size of one board square
      */
-    public Hive(int xPosition, int yPosition, int squareSize) {
+    public Hive(int xPosition, int yPosition, int squareSize, Random rng) {
         super(xPosition - (xPosition % squareSize), yPosition - (yPosition % squareSize), squareSize);
         lifetime = 0;
-        rng = new Random(System.currentTimeMillis());
+        this.rng = rng;
     }
 
     /**

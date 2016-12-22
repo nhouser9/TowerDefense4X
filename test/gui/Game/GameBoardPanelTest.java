@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package gui.Game;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -179,6 +179,26 @@ public class GameBoardPanelTest {
 
         try {
             Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), null);
+        } catch (OffscreenException offscreen) {
+            fail("Did not expect offscreen exception.");
+        }
+    }
+
+    /**
+     * Test of addUnit method, of class GameBoardPanel.
+     */
+    @Test
+    public void AddUnit_ShouldNotAddATower_IfATowerExistsAtThatPosition() {
+        BoardState testBoardState = new BoardState(InitialState.EMPTY);
+        GameBoardPanel board = new GameBoardPanel(testBoardState);
+        Tower testTower = new Blocker(0, 0, board.getSquareSize());
+        Tower testTower2 = new Blocker(0, 0, board.getSquareSize());
+
+        board.addUnit(testTower);
+        board.addUnit(testTower2);
+
+        try {
+            Assert.assertEquals(board.search().towerAtGridPosition(new Point(0, 0)), testTower);
         } catch (OffscreenException offscreen) {
             fail("Did not expect offscreen exception.");
         }

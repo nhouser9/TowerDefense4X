@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package gui.Game;
 
 import java.awt.Point;
+import java.util.Random;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -152,7 +153,7 @@ public class BoardSearchTest {
     public void FirstEnemyInArea_ShouldNotFindHives() {
         BoardState testBoardState = new BoardState(InitialState.EMPTY);
         GameBoardPanel board = new GameBoardPanel(testBoardState);
-        Enemy testEnemy = new Hive(0, 0, board.getSquareSize());
+        Enemy testEnemy = new Hive(0, 0, board.getSquareSize(), new Random());
 
         board.addUnit(testEnemy);
 

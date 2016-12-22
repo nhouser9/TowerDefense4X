@@ -14,29 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package units.Towers;
-
-import gui.Game.GameBoardPanel;
-import org.junit.Test;
-import static org.junit.Assert.*;
+package gui.Game;
 
 /**
- * Unit tests for the Tower class.
+ * Enum which defines a constant for each possible initial board state. States
+ * containing an underscore will be shown in the levels menu, other states are
+ * intended to be used for testing only.
  *
  * @author Nick Houser
  */
-public class TowerTest {
-
-    /**
-     * Test of Constructor method, of class Tower.
-     */
-    @Test
-    public void Constructor_ShouldRoundPosition_WhenArgsNotDivisibleBySquareSize() {
-        int fakeSquareSize = 6;
-        int xGridAlignment = fakeSquareSize * 2;
-        int yGridAlignment = fakeSquareSize * 4;
-        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + fakeSquareSize - 2, fakeSquareSize);
-        assertEquals(test.getPosition().x, xGridAlignment);
-        assertEquals(test.getPosition().y, yGridAlignment);
-    }
+public enum InitialState {
+    EMPTY,
+    INTEGRATIONTEST,
+    LEVEL_1,
+    LEVEL_2,
+    LEVEL_3,
+    LEVEL_4,
+    LEVEL_5,
+    LEVEL_6,
+    LEVEL_7,
+    LEVEL_8
 }

@@ -16,7 +16,7 @@
  */
 package units;
 
-import gui.GameBoardPanel;
+import gui.Game.GameBoardPanel;
 import java.awt.Graphics;
 import java.awt.Point;
 

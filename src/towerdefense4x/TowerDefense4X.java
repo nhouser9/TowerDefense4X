@@ -16,14 +16,7 @@
  */
 package towerdefense4x;
 
-import gui.BoardMouseListener;
-import gui.BoardState;
-import gui.GameBoardPanel;
-import gui.GuiPanel;
-import gui.InitialState;
-import gui.PurchasePanel;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import gui.MainFrame;
 
 /**
  * Main class and entry point for the program. Creates the frame which will
@@ -33,8 +26,10 @@ import javax.swing.JFrame;
  */
 public class TowerDefense4X {
 
-    //constant indicating how many milliseconds should elapse between game ticks
-    private static final int TICK_LENGTH = 20;
+    /**
+     * Constant indicating how many milliseconds should elapse between game ticks.
+     */
+    public static final int TICK_LENGTH = 20;
 
     /**
      * Main method and entry point for the program. Creates the main game window
@@ -44,35 +39,17 @@ public class TowerDefense4X {
      */
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
-        
-        JFrame gameWindow = new JFrame();
-        gameWindow.setLayout(new BoxLayout(gameWindow.getContentPane(), BoxLayout.X_AXIS));
-        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        GameBoardPanel board = new GameBoardPanel(new BoardState(InitialState.INTEGRATIONTEST));
-        GuiPanel gui = new GuiPanel();
-        PurchasePanel buy = new PurchasePanel();
-        
-        board.addMouseListener(new BoardMouseListener(buy, board));
-        
-        gameWindow.add(gui);
-        gameWindow.add(board);
-        gameWindow.add(buy);
-        
-        gameWindow.pack();
-        gameWindow.setResizable(false);
-        gameWindow.setVisible(true);
+
+        MainFrame frame = new MainFrame();
 
         try {
             long nextTick = System.currentTimeMillis();
             long delta;
             while (true) {
                 nextTick = nextTick + TICK_LENGTH;
-                
-                board.tick();
-                gameWindow.repaint();
-                
-                
+
+                frame.tick();
+
                 delta = nextTick - System.currentTimeMillis();
                 if (delta > 0) {
                     Thread.sleep(delta);

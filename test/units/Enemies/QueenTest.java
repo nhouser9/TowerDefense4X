@@ -16,9 +16,9 @@
  */
 package units.Enemies;
 
-import gui.BoardSearch;
-import gui.GameBoardPanel;
-import gui.OffscreenException;
+import gui.Game.BoardSearch;
+import gui.Game.GameBoardPanel;
+import gui.Game.OffscreenException;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
