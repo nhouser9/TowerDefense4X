@@ -1,0 +1,6 @@
+squares=7
+time=30
+hive=0,0
+hive=6,0
+hive=0,6
+generator=6,6

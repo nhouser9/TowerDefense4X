@@ -1,0 +1,8 @@
+squares=15
+time=30
+hive=3,0
+hive=5,0
+hive=7,0
+hive=9,0
+hive=11,0
+generator=7,14

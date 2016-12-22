@@ -14,33 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package units.enemies;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.awt.Point;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
- * Class representing the pane shown when a level ends.
+ * Unit tests for the Enemy class.
  *
  * @author Nick Houser
  */
-public class LevelFinishedPanel extends JPanel {
+public class EnemyTest {
 
     /**
-     * Constructor which initializes subcomponents and arranges them according
-     * to the proper layout.
-     *
-     * @param window the game window to call to reset or return to the main menu
-     * @param won whether the user won or lost the leve
+     * Test of Constructor method, of class Enemy.
      */
-    public LevelFinishedPanel(MainFrame window, boolean won) {
-        
-
-        JButton menuButton = new JButton("Main Menu");
-        menuButton.addActionListener((ActionEvent e) -> {
-            window.showMenu();
-        });
-        add(menuButton);
+    @Test
+    public void Constructor_ShouldSetPositionEqualToPassedPosition() {
+        int x = 3;
+        int y = 200;
+        Burrower testEnemy = new Burrower(x, y, new Point(1, 1), 1);
+        assertEquals(x, testEnemy.getPosition().x);
+        assertEquals(y, testEnemy.getPosition().y);
     }
 }

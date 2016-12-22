@@ -16,11 +16,11 @@
  */
 package units;
 
-import units.Enemies.Burrower;
+import units.enemies.Burrower;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import units.Towers.Healer;
+import units.towers.Healer;
 
 /**
  * Unit tests for the Unit class.

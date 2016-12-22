@@ -16,7 +16,7 @@
  */
 package gui;
 
-import gui.Game.InitialState;
+import gui.game.levels.LevelCreator;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -35,17 +35,13 @@ public class LevelsPanel extends JPanel {
      * @param window the game window to call to reset or return to the main menu
      */
     public LevelsPanel(MainFrame window) {
-        for (InitialState state : InitialState.values()) {
-            String stateString = state.toString();
-            if (stateString.contains("_")) {
-                int underscoreLocation = stateString.indexOf('_');
-                String buttonString = stateString.substring(underscoreLocation + 1);
-                JButton levelButton = new JButton(buttonString);
-                levelButton.addActionListener((ActionEvent e) -> {
-                    window.showGame(state);
-                });
-                add(levelButton);
-            }
+        for (int level = 1; level <= LevelCreator.MAX_LEVEL; level++) {
+            final int finalLevel = level;
+            JButton levelButton = new JButton("" + level);
+            levelButton.addActionListener((ActionEvent e) -> {
+                window.showGame(finalLevel);
+            });
+            add(levelButton);
         }
 
         JButton backButton = new JButton("Back");

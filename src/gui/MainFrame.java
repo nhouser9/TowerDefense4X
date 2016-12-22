@@ -16,8 +16,8 @@
  */
 package gui;
 
-import gui.Game.GamePanel;
-import gui.Game.InitialState;
+import gui.game.GamePanel;
+import gui.game.levels.LevelNotFoundException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -47,19 +47,26 @@ public class MainFrame extends JFrame {
     /**
      * Helper method which sets up the Frame to show the game.
      *
-     * @param state the initial board state to set up with
+     * @param level the level to show
      */
-    public void showGame(InitialState state) {
+    public void showGame(int level) {
+        GamePanel tryAdd;
+        try {
+            tryAdd = new GamePanel(this, level);
+        } catch (LevelNotFoundException badLevel) {
+            return;
+        }
+
         if (visiblePanel != null) {
             remove(visiblePanel);
         }
 
-        visiblePanel = new GamePanel(this, state);
+        visiblePanel = tryAdd;
         add(visiblePanel);
 
         pack();
     }
-    
+
     public void showMenu() {
         if (visiblePanel != null) {
             remove(visiblePanel);
@@ -70,7 +77,7 @@ public class MainFrame extends JFrame {
 
         pack();
     }
-    
+
     public void showLevels() {
         if (visiblePanel != null) {
             remove(visiblePanel);

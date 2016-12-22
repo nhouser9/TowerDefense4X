@@ -14,33 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
-
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+package gui.game.levels;
 
 /**
- * Class representing the pane shown when a level ends.
- *
+ * Exception which will be thrown when an invalid level id is passed to the LevelCreator.
+ * 
  * @author Nick Houser
  */
-public class LevelFinishedPanel extends JPanel {
-
+public class LevelNotFoundException extends Exception {
+    
+    //the bad level that caused the exception
+    public final int level;
+    
     /**
-     * Constructor which initializes subcomponents and arranges them according
-     * to the proper layout.
-     *
-     * @param window the game window to call to reset or return to the main menu
-     * @param won whether the user won or lost the leve
+     * Constructor which saves the level number that caused the exception.
+     * 
+     * @param cause the inner exception
+     * @param level the level number that caused the exception
      */
-    public LevelFinishedPanel(MainFrame window, boolean won) {
-        
-
-        JButton menuButton = new JButton("Main Menu");
-        menuButton.addActionListener((ActionEvent e) -> {
-            window.showMenu();
-        });
-        add(menuButton);
+    public LevelNotFoundException(Exception cause, int level) {
+        super(cause);
+        this.level = level;
     }
 }

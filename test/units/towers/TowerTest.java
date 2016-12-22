@@ -14,33 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package units.towers;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
- * Class representing the pane shown when a level ends.
+ * Unit tests for the Tower class.
  *
  * @author Nick Houser
  */
-public class LevelFinishedPanel extends JPanel {
+public class TowerTest {
 
     /**
-     * Constructor which initializes subcomponents and arranges them according
-     * to the proper layout.
-     *
-     * @param window the game window to call to reset or return to the main menu
-     * @param won whether the user won or lost the leve
+     * Test of Constructor method, of class Tower.
      */
-    public LevelFinishedPanel(MainFrame window, boolean won) {
-        
-
-        JButton menuButton = new JButton("Main Menu");
-        menuButton.addActionListener((ActionEvent e) -> {
-            window.showMenu();
-        });
-        add(menuButton);
+    @Test
+    public void Constructor_ShouldRoundPosition_WhenArgsNotDivisibleBySquareSize() {
+        int fakeSquareSize = 6;
+        int xGridAlignment = fakeSquareSize * 2;
+        int yGridAlignment = fakeSquareSize * 4;
+        Terrain test = new Terrain(xGridAlignment + 2, yGridAlignment + fakeSquareSize - 2, fakeSquareSize);
+        assertEquals(test.getPosition().x, xGridAlignment);
+        assertEquals(test.getPosition().y, yGridAlignment);
     }
 }

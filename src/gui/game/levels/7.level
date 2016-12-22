@@ -1,0 +1,11 @@
+squares=7
+time=30
+hive=3,3
+hive=3,3
+hive=3,3
+hive=3,3
+hive=3,3
+generator=0,6
+generator=6,0
+generator=0,0
+generator=6,6
