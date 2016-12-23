@@ -1,0 +1,10 @@
+squares=9
+time=45
+hive=6,6
+hive=6,4
+hive=6,2
+hive=2,6
+hive=2,4
+hive=4,2
+hive=4,6
+generator=4,4

@@ -35,7 +35,7 @@ public class LevelCreator {
     /**
      * Constant indicating the highest available level.
      */
-    public static final int MAX_LEVEL = 8;
+    public static final int MAX_LEVEL = 9;
 
     //constants storing the names of valid commands contained by .level files
     private static final String COMMAND_SQUARES = "squares";

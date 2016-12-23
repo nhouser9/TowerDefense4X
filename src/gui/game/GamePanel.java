@@ -17,6 +17,7 @@
 package gui.game;
 
 import gui.MainFrame;
+import gui.game.levels.BoardState;
 import gui.game.levels.LevelCreator;
 import gui.game.levels.LevelNotFoundException;
 import javax.swing.BoxLayout;
@@ -45,8 +46,10 @@ public class GamePanel extends JPanel {
     public GamePanel(MainFrame parent, int level) throws LevelNotFoundException {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        gui = new GuiPanel(parent, level, 5000);
-        board = new GameBoardPanel(LevelCreator.createLevel(level));
+        BoardState levelState = LevelCreator.createLevel(level);
+        
+        gui = new GuiPanel(parent, level, levelState.initialTime);
+        board = new GameBoardPanel(levelState);
         PurchasePanel buy = new PurchasePanel();
 
         BoardMouseListener mouseListener = new BoardMouseListener(buy, board);

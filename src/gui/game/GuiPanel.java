@@ -54,19 +54,18 @@ public class GuiPanel extends JPanel {
      *
      * @param window the game window to call to reset or return to the main menu
      * @param level the initial level used for the game, used for resetting
-     * @param initialTicks the number of ticks the player must survive to win
+     * @param initialSeconds number of seconds the player must survive to win
      */
-    public GuiPanel(MainFrame window, int level, int initialTicks) {
+    public GuiPanel(MainFrame window, int level, int initialSeconds) {
         this.window = window;
 
         setLayout(new GridLayout(0, 1));
 
         add(new JLabel("Time Left:"));
 
-        remainingTicks = initialTicks % TICKS_PER_SECOND;
-        remainingSeconds = Math.floorDiv(initialTicks, TICKS_PER_SECOND);
-        remainingMinutes = Math.floorDiv(remainingSeconds, SECONDS_PER_MINUTE);
-        remainingSeconds = remainingSeconds % SECONDS_PER_MINUTE;
+        remainingTicks = 0;
+        remainingSeconds = initialSeconds % SECONDS_PER_MINUTE;
+        remainingMinutes = Math.floorDiv(initialSeconds, SECONDS_PER_MINUTE);
         timeLabel = new JLabel();
         add(timeLabel);
 
